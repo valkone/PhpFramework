@@ -2,10 +2,11 @@
 
 namespace Framework;
 
-require_once 'Routers.php';
+require_once 'configurations/routers.php';
+require_once 'configurations/main.php';
+require_once 'configurations/areas.php';
 
 $uri = $_GET['uri'];
-$customRouterFound = false;
 foreach($customRouters as $route) {
     $pattern = '/^' . str_replace('/', '\/', $route->getRoute()) . '/';
     if (preg_match($pattern, $uri, $matches, PREG_OFFSET_CAPTURE)) {
@@ -14,25 +15,37 @@ foreach($customRouters as $route) {
         $requestUri = str_replace($route->getRoute(), '', $uri);
         $requestUri = explode('/', $requestUri);
         $requestUri = array_filter($requestUri);
-        $customRouterFound = true;
+        $controllerNamespace = '\\Framework\\Controllers\\';
 
         break;
     }
 }
 
-if(!$customRouterFound) {
+$urlSplit = explode('/', $uri);
+if(count($urlSplit) >= 3) {
+    $requestUri = explode("/", $uri);
+    $possibleAreas = $urlSplit[0];
+    if(in_array($possibleAreas, $areas)) {
+        $area = array_shift($requestUri);
+        $controller = array_shift($requestUri);
+        $action = array_shift($requestUri);
+        $controllerNamespace = '\\Framework\\Areas\\' . ucfirst($area) . '\\Controllers\\';
+    }
+}
+
+if(!isset($controller)) {
     $requestUri = explode("/", $uri);
     $controller = array_shift($requestUri);
     $action = array_shift($requestUri);
+    $controllerNamespace = '\\Framework\\Controllers\\';
 }
 
-$controllerName = '\\Framework\\Controllers\\' . ucfirst($controller) . 'Controller';
+$controllerName = $controllerNamespace . ucfirst($controller) . 'Controller';
 
 spl_autoload_register(function($class) {
     $splitted = explode("\\", $class);
     array_shift($splitted);
     $fullClassName = implode(DIRECTORY_SEPARATOR, $splitted);
-
     require_once $fullClassName . '.php';
 });
 
