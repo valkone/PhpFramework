@@ -42,3 +42,17 @@ $array = [
     ->addAttribute('class', 'button')
     ->setRowsAndCols(20, 20)
     ->render();
+
+$testArray = [
+    1 => 'dqw',
+    "dqw" => "we"
+];
+?>
+
+<script type="text/javascript">
+    <?php
+        \Framework\ViewHelpers\AjaxViewHelper::create()
+        ->init('#asd', 'click', 'http://localhost/asd.php', 'POST', $testArray, "alert('ads');")
+        ->render();
+    ?>
+</script>

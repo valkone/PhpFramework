@@ -83,8 +83,6 @@ class View {
         require $path;
     }
 
-
-
     private static function loadViewOnly() {
         if(isset(self::$area)) {
             $path = 'Areas'
