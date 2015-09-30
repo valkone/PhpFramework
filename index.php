@@ -1,4 +1,7 @@
 <?php
+
+namespace Framework;
+
 require_once 'Routers.php';
 
 $uri = $_GET['uri'];
@@ -33,7 +36,12 @@ spl_autoload_register(function($class) {
     require_once $fullClassName . '.php';
 });
 
-//$controllerInstance = new $controllerName();
-echo $controller."<br />";
-echo $action."<br />";
-var_dump($requestUri);
+View::$controllerName = $controller;
+View::$actionName = $action;
+
+$controllerInstance = new $controllerName();
+
+call_user_func_array(
+    array($controllerInstance, $action),
+    $requestUri
+);

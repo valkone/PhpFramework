@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework;
+
 class Route {
     private $route;
     private $controller;
