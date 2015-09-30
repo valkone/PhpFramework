@@ -31,7 +31,7 @@ class View {
         $view = str_replace('\\', DIRECTORY_SEPARATOR, $view);
 
         if(isset(self::$area)) {
-            require
+            $path =
                 'Areas'
                 . DIRECTORY_SEPARATOR
                 . self::$area
@@ -41,11 +41,15 @@ class View {
                 . $view
                 . '.php';
         } else {
-            require 'Views'
+            $path = 'Views'
                 . DIRECTORY_SEPARATOR
                 . $view
                 . '.php';
         }
+
+        self::strongTypeViewCheck($path, $model);
+
+        require $path;
     }
 
     private static function loadOnlyModel($model) {
@@ -54,7 +58,7 @@ class View {
         }
 
         if(isset(self::$area)) {
-            require
+            $path =
                 'Areas'
                 . DIRECTORY_SEPARATOR
                 . self::$area
@@ -66,18 +70,24 @@ class View {
                 . self::$actionName
                 . '.php';
         } else {
-            require 'Views'
+            $path = 'Views'
                 . DIRECTORY_SEPARATOR
                 . self::$controllerName
                 . DIRECTORY_SEPARATOR
                 . self::$actionName
                 . '.php';
         }
+
+        self::strongTypeViewCheck($path, $model);
+
+        require $path;
     }
+
+
 
     private static function loadViewOnly() {
         if(isset(self::$area)) {
-            require 'Areas'
+            $path = 'Areas'
             . DIRECTORY_SEPARATOR
             . self::$area
             . DIRECTORY_SEPARATOR
@@ -88,12 +98,27 @@ class View {
             . self::$actionName
             . '.php';
         } else {
-            require 'Views'
+            $path = 'Views'
                 . DIRECTORY_SEPARATOR
                 . self::$controllerName
                 . DIRECTORY_SEPARATOR
                 . self::$actionName
                 . '.php';
+        }
+
+        require $path;
+    }
+
+    private static function strongTypeViewCheck($path, $model) {
+        $f = fopen($path, 'r');
+        $line = fgets($f);
+        fclose($f);
+        preg_match('/ [a-zA-Z\\\\]+ /', $line, $match, PREG_OFFSET_CAPTURE);
+        if(count($match) > 0) {
+            $type = $match[0][0];
+            if(get_class($model) != trim($type)) {
+                throw new \Exception("Wrong type supplied");
+            }
         }
     }
 

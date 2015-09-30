@@ -13,7 +13,8 @@ class UserController extends BaseController{
     }
 
     public function edit($id, $name) {
-        $model = new UserEditViewModel($id, $name);
+        $user = new UserModel();
+        $model = $user->getAll();
 
         return new View($model);
     }
