@@ -2,6 +2,7 @@
 
 namespace Framework\Controllers;
 
+use Framework\Models\CategoriesModel;
 use Framework\Models\UsersModels;
 use Framework\View;
 
@@ -19,7 +20,12 @@ class UsersController {
                 View::$viewBag['error'] = $e->getMessage();
             }
         }
-        return new View();
+        
+        $categoriesModel = new CategoriesModel();
+        $categories = $categoriesModel->getAllCategories();
+        $model["categories"] = $categories;
+
+        return new View($model);
     }
 
     public function Register() {
@@ -53,7 +59,12 @@ class UsersController {
 
             View::$viewBag['errors'] = $errors;
         }
-        return new View();
+
+        $categoriesModel = new CategoriesModel();
+        $categories = $categoriesModel->getAllCategories();
+        $model["categories"] = $categories;
+
+        return new View($model);
     }
 
     public function Logout() {

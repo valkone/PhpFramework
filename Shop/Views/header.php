@@ -11,7 +11,7 @@
     <div id="header">
         <div id="top-menu">
             <div id="left-top-menu">
-                <tab>Welcome <span>Guest</span></tab>
+                <tab>Welcome <span><?= $_SESSION['username']; ?></span></tab>
                 <tab>Currency: <span>USD</span></tab>
                 <tab>Language: <span>English</span></tab>
             </div>

@@ -2,181 +2,45 @@
 require 'Views/header.php';
 ?>
     <div id="content">
-        <div id="aside">
-            <div class="label">CATEGORY</div>
-            <ul>
-                <a href="#"><li>LAPTOP</li></a>
-                <a href="#"><li>KEYBOARD</li></a>
-                <a href="#"><li>TABLET</li></a>
-                <a href="#"><li>FASHION</li></a>
-                <a href="#"><li>TELEVISION</li></a>
-                <a href="#"><li>PHONE</li></a>
-                <a href="#"><li>GAME</li></a>
-            </ul>
-        </div>
+        <?php require 'Views/aside.php'; ?>
         <div id="main-content">
             <div class="product-section">
                 <div class="label">NEW PRODUCTS</div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
+                <?php foreach($model["newProducts"] as $newProduct): ?>
+                    <div class="product">
+                        <a href="#">
+                            <div class="product-image">
+                                <img src="images/product.jpg"/>
+                            </div>
+                            <div class="product-name">
+                                <?= $newProduct["name"]; ?>
+                            </div>
+                            <div class="product-price">
+                                $ <?= $newProduct["price"]; ?>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+
                 <div class="clear"></div>
             </div>
             <div class="product-section">
                 <div class="label">BESTSELLERS</div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
-                <div class="product">
-                    <a href="#">
-                        <div class="product-image">
-                            <img src="images/product.jpg"/>
-                        </div>
-                        <div class="product-name">
-                            Laptop ProBook 45040s
-                        </div>
-                        <div class="product-price">
-                            $26.00
-                        </div>
-                    </a>
-                </div>
+                <?php foreach($model["secondHandProducts"] as $secondHandProduct): ?>
+                    <div class="product">
+                        <a href="#">
+                            <div class="product-image">
+                                <img src="images/product.jpg"/>
+                            </div>
+                            <div class="product-name">
+                                <?= $secondHandProduct["name"]; ?>
+                            </div>
+                            <div class="product-price">
+                                $ <?= $secondHandProduct["price"]; ?>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
                 <div class="clear"></div>
             </div>
         </div>
