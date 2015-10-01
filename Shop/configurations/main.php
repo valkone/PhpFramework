@@ -1,4 +1,4 @@
 <?php
 
 define("__ESCAPING__", true);
-define("__MAIN_URL__", "http://localhost/PhpFrameworkGit/trunk/Shop/");
+define("__MAIN_URL__", "http://localhost/PhpFrameworkGit/trunk/Shop/"); // with "/" at the end of the url

@@ -2,7 +2,6 @@
 
 namespace Framework\Controllers;
 
-use Framework\DB;
 use Framework\Models\UsersModels;
 use Framework\View;
 
@@ -10,7 +9,15 @@ class UsersController {
 
     public function Login() {
         if(isset($_POST['loginButton'])) {
-            echo 'OK';
+            $username = $_POST['username'];
+            $pass = $_POST['password'];
+
+            $userModel = new UsersModels();
+            try {
+                $userModel->login($username, $pass);
+            } catch(\Exception $e) {
+                View::$viewBag['error'] = $e->getMessage();
+            }
         }
         return new View();
     }
@@ -47,5 +54,11 @@ class UsersController {
             View::$viewBag['errors'] = $errors;
         }
         return new View();
+    }
+
+    public function Logout() {
+        session_destroy();
+        header("Location: " . __MAIN_URL__ . "/Home/home");
+        exit;
     }
 }

@@ -17,8 +17,19 @@
             </div>
             <div id="right-top-menu">
                 <ul>
-                    <li><tab><a href="<?= __MAIN_URL__ . "Users/Login"; ?>">Login</a></tab></li>
-                    <li><tab><a href="<?= __MAIN_URL__ . "Users/Register"; ?>">Register</a></tab></li>
+                    <?php
+                        if(isset($_SESSION['is_logged'])) {
+                            ?>
+                            <li><tab><a href="<?= __MAIN_URL__ . "Users/Logout"; ?>">Logout</a></tab></li>
+                            <?php
+                        } else {
+                            ?>
+                            <li><tab><a href="<?= __MAIN_URL__ . "Users/Login"; ?>">Login</a></tab></li>
+                            <li><tab><a href="<?= __MAIN_URL__ . "Users/Register"; ?>">Register</a></tab></li>
+                            <?php
+                        }
+                    ?>
+
                 </ul>
             </div>
             <div class="clear"></div>

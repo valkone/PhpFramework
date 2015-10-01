@@ -16,19 +16,27 @@ require 'Views/header.php';
         </div>
         <div id="main-content">
             <div id="form">
+                <?php
+                    if(isset(self::$viewBag["error"])) {
+                        echo '<div class="error">';
+                        echo self::$viewBag["error"];
+                        echo "</div>";
+                    }
+                ?>
                 <form method="post">
-                    Name:
+                    <p>Username:</p>
                     <?php
                     \Framework\ViewHelpers\TextField::create()
-                        ->addAttribute("name", "name")
+                        ->addAttribute("name", "username")
                         ->render();
                     ?>
-                    Password:
+                    <p>Password:</p>
                     <?php
                     \Framework\ViewHelpers\TextField::create()
                         ->addAttribute("name", "password")
                         ->render();
                     ?>
+                    <br />
                     <input type="submit" value="Login" name="loginButton" />
                 </form>
             </div>
