@@ -86,3 +86,10 @@ $testArray = [
     ?>
     <input type="submit" value="go" />
 </form>
+
+<?php
+
+\Framework\ViewHelpers\UploadFiles::create()
+    ->addAttribute("name", "pic")
+    ->addAttribute("accept", "image/*")
+    ->render();
