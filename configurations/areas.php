@@ -1,5 +1,5 @@
 <?php
 
 $areas = [
-    'Forum'
+
 ];
