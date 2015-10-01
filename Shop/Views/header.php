@@ -11,7 +11,15 @@
     <div id="header">
         <div id="top-menu">
             <div id="left-top-menu">
-                <tab>Welcome <span><?= $_SESSION['username']; ?></span></tab>
+                <tab>Welcome <span>
+                        <?php
+                            if(isset($_SESSION['is_logged'])) {
+                                echo $_SESSION['username'];
+                            } else {
+                                echo "Guest";
+                            }
+                        ?>
+                    </span></tab>
                 <tab>Currency: <span>USD</span></tab>
                 <tab>Language: <span>English</span></tab>
             </div>

@@ -4,6 +4,8 @@ namespace Framework;
 
 session_start();
 
+$_SESSION['editor'] = true;
+
 require_once 'configurations/routers.php';
 require_once 'configurations/main.php';
 require_once 'Token.php';
@@ -104,15 +106,15 @@ foreach($matches[0] as $match) {
         }
     } else if(strtolower($match) == "@post") {
         if(strtolower($_SERVER['REQUEST_METHOD']) != "post") {
-            throw new \Exception("This method can be called only on GET");
+            throw new \Exception("This method can be called only on POST");
         }
     } else if(strtolower($match) == "@put") {
         if(strtolower($_SERVER['REQUEST_METHOD']) != "put") {
-            throw new \Exception("This method can be called only on GET");
+            throw new \Exception("This method can be called only on PUT");
         }
     } else if(strtolower($match) == "@delete") {
         if(strtolower($_SERVER['REQUEST_METHOD']) != "delete") {
-            throw new \Exception("This method can be called only on GET");
+            throw new \Exception("This method can be called only on DELETE");
         }
     } else if(strtolower($match) == "@authorize") {
         if(!isset($_SESSION['is_logged'])) {
