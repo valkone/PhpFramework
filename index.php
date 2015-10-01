@@ -17,7 +17,7 @@ if(!isset($_SESSION['token'])) {
 
 $uri = $_GET['uri'];
 foreach($customRouters as $route) {
-    $pattern = '/^' . str_replace('/', '\/', $route->getRoute()) . '/';
+    $pattern = '/' . str_replace('/', '\/', $route->getRoute()) . '/';
     if (preg_match($pattern, $uri, $matches, PREG_OFFSET_CAPTURE)) {
         $controller = $route->getController();
         $action = $route->getAction();
@@ -108,6 +108,14 @@ foreach($matches[0] as $match) {
     } else if(strtolower($match) == "@delete") {
         if(strtolower($_SERVER['REQUEST_METHOD']) != "delete") {
             throw new \Exception("This method can be called only on GET");
+        }
+    } else if(strtolower($match) == "@authorize") {
+        if(!isset($_SESSION['is_logged'])) {
+            throw new \Exception("This method can be called only if you are logged");
+        }
+    } else if(strtolower($match) == "@admin") {
+        if(!isset($_SESSION['admin'])) {
+            throw new \Exception("This method can be called only if you are admin");
         }
     }
 }

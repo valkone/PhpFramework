@@ -38,10 +38,16 @@ class UserController extends BaseController{
     /**
      * @see testToken
      * @GET
+     * @Admin
      */
     public static function testGetAnnotations() {
         //$_SERVER['REQUEST_METHOD']
         echo 'test';
+    }
+
+    public function Register($first, $second) {
+        echo $first.'<br />';
+        echo $second;
     }
 }
 
