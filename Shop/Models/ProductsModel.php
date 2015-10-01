@@ -17,7 +17,7 @@ class ProductsModel {
         $conn = DB::connect();
 
         $allNewProductSql = 'SELECT id, name, price, description, quantity, picture FROM products
-                              WHERE `condition`="'.ProductCondition::NewCondition.'" AND quantity > 0
+                              WHERE `condition`="'.ProductCondition::NewCondition.'" AND quantity > 0 AND isDeleted = 0
                               ORDER BY added_on LIMIT '.$productCount.'';
         $newProducts = $conn->query($allNewProductSql)->fetchAll();
 
@@ -32,18 +32,29 @@ class ProductsModel {
         $conn = DB::connect();
 
         $allSecondHandProductSql = 'SELECT id, name, price, description, quantity, picture FROM products
-                              WHERE `condition`="'.ProductCondition::SecondHand.'" AND quantity > 0
+                              WHERE `condition`="'.ProductCondition::SecondHand.'" AND quantity > 0 AND isDeleted = 0
                               ORDER BY added_on LIMIT '.$productCount.'';
         $secondHandProducts = $conn->query($allSecondHandProductSql)->fetchAll();
 
         return $secondHandProducts;
     }
 
+    public function getAllProducts() {
+        $conn = DB::connect();
+
+        $allProductsSql = 'SELECT id, name, price, description, quantity, picture FROM products
+                              WHERE quantity > 0 AND isDeleted = 0
+                              ORDER BY added_on';
+        $allProducts = $conn->query($allProductsSql)->fetchAll();
+
+        return $allProducts;
+    }
+
     public function getProductById($id) {
         $conn = DB::connect();
 
         $productByIdSql = 'SELECT name, price, description, quantity, `condition`, picture
-                           FROM products WHERE id="'.$id.'"  AND quantity > 0';
+                           FROM products WHERE id="'.$id.'"  AND quantity > 0 AND isDeleted = 0';
 
         $product = $conn->query($productByIdSql)->fetch();
 
@@ -80,5 +91,21 @@ class ProductsModel {
         }
 
         View::$viewBag['productAdded'] = true;
+    }
+
+    public function deleteProductById($id) {
+        $conn = DB::connect();
+
+        $validIdSql = 'SELECT id FROM products WHERE id="'.$id.'"';
+        if($conn->query($validIdSql)->rowCount() == 0) {
+            throw new \Exception("Invalid product");
+        }
+
+        $deleteProductSql = 'UPDATE products SET isDeleted=1 WHERE id="'.$id.'"';
+        if(!$conn->query($deleteProductSql)){
+            throw new \Exception("Database error");
+        }
+
+        View::$viewBag['productDeleted'] = true;
     }
 }

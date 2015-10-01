@@ -2,6 +2,7 @@
 
 namespace Framework\Controllers;
 
+use Framework\Functions;
 use Framework\Models\BindingModels\ProductBindingModel;
 use Framework\Models\CategoriesModel;
 use Framework\Models\ProductsModel;
@@ -24,9 +25,7 @@ class ProductsController {
     }
 
     public function add() {
-        if(!isset($_SESSION['admin']) && !isset($_SESSION['editor'])) {
-            throw new \Exception("You don't have acces to this method");
-        }
+        Functions::EditorAuthorization();
 
         if(isset($_POST['addItemButton'])) {
             $name = $_POST['name'];
@@ -65,6 +64,29 @@ class ProductsController {
                 View::$viewBag['errors'] = $errors;
             }
         }
+
+        $categoriesModel = new CategoriesModel();
+        $categories = $categoriesModel->getAllCategories();
+        $model["categories"] = $categories;
+
+        return new View($model);
+    }
+
+    public function delete($productId = null) {
+        Functions::EditorAuthorization();
+
+        $productModel = new ProductsModel();
+
+        if($productId) {
+            try {
+                $productModel->deleteProductById($productId);
+            } catch(\Exception $e) {
+                $model['error'] = $e->getMessage();
+            }
+        }
+
+        $products = $productModel->getAllProducts();
+        $model['products'] = $products;
 
         $categoriesModel = new CategoriesModel();
         $categories = $categoriesModel->getAllCategories();
