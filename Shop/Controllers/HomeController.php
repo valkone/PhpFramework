@@ -14,8 +14,8 @@ class HomeController {
         $model["categories"] = $categories;
 
         $productsModel = new ProductsModel();
-        $newProducts = $productsModel->getAllNewProducts();
-        $secondHandProducts = $productsModel->getAllSecondHandProducts();
+        $newProducts = $productsModel->getLastNewProducts(20);
+        $secondHandProducts = $productsModel->getLastSecondHandProducts(20);
         $model["newProducts"] = $newProducts;
         $model["secondHandProducts"] = $secondHandProducts;
 

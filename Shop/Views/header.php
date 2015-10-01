@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>ECommerce Home</title>
-    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="<?= __MAIN_URL__ ?>styles/style.css" />
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
@@ -36,7 +36,7 @@
         </div>
         <div id="header-main">
             <div id="logo">
-                <a href="#"><img src="../images/logo.jpg" /></a>
+                <a href="#"><img src="<?= __MAIN_URL__ ?>images/logo.jpg" /></a>
             </div>
             <div id="search">
                 <form>

@@ -4,7 +4,7 @@ require 'Views/header.php';
     <div id="content">
         <?php require 'Views/aside.php'; ?>
         <div id="main-content">
-            <div id="form">
+            <div id="mcontent">
                 <?php
                     if(isset(self::$viewBag["error"])) {
                         echo '<div class="error">';

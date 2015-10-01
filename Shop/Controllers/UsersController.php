@@ -20,7 +20,7 @@ class UsersController {
                 View::$viewBag['error'] = $e->getMessage();
             }
         }
-        
+
         $categoriesModel = new CategoriesModel();
         $categories = $categoriesModel->getAllCategories();
         $model["categories"] = $categories;
@@ -63,6 +63,19 @@ class UsersController {
         $categoriesModel = new CategoriesModel();
         $categories = $categoriesModel->getAllCategories();
         $model["categories"] = $categories;
+
+        return new View($model);
+    }
+
+    public function Profile() {
+
+        $categoriesModel = new CategoriesModel();
+        $categories = $categoriesModel->getAllCategories();
+        $model["categories"] = $categories;
+
+        $usersModel = new UsersModels();
+        $userInfo = $usersModel->getUserInfo($_SESSION['username']);
+        $model["userInfo"] = $userInfo;
 
         return new View($model);
     }

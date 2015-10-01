@@ -7,21 +7,31 @@ use Framework\ProductCondition;
 
 class ProductsModel {
 
-    public function getAllNewProducts() {
+    /**
+     * @param $productCount
+     * @return array
+     */
+    public function getLastNewProducts($productCount) {
         $conn = DB::connect();
 
         $allNewProductSql = 'SELECT id, name, price, description, quantity, picture FROM products
-                              WHERE `condition`="'.ProductCondition::NewCondition.'"';
+                              WHERE `condition`="'.ProductCondition::NewCondition.'"
+                              ORDER BY added_on LIMIT '.$productCount.'';
         $newProducts = $conn->query($allNewProductSql)->fetchAll();
 
         return $newProducts;
     }
 
-    public function getAllSecondHandProducts() {
+    /**
+     * @param $productCount
+     * @return array
+     */
+    public function getLastSecondHandProducts($productCount) {
         $conn = DB::connect();
 
         $allSecondHandProductSql = 'SELECT id, name, price, description, quantity, picture FROM products
-                              WHERE `condition`="'.ProductCondition::SecondHand.'"';
+                              WHERE `condition`="'.ProductCondition::SecondHand.'"
+                              ORDER BY added_on LIMIT '.$productCount.'';
         $secondHandProducts = $conn->query($allSecondHandProductSql)->fetchAll();
 
         return $secondHandProducts;
