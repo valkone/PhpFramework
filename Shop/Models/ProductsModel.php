@@ -36,4 +36,15 @@ class ProductsModel {
 
         return $secondHandProducts;
     }
+
+    public function getProductById($id) {
+        $conn = DB::connect();
+
+        $productByIdSql = 'SELECT name, price, description, quantity, `condition`, picture
+                           FROM products WHERE id="'.$id.'"';
+
+        $product = $conn->query($productByIdSql)->fetch();
+
+        return $product;
+    }
 }
