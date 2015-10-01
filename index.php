@@ -9,9 +9,12 @@ require_once 'configurations/main.php';
 require_once 'Token.php';
 require_once 'configurations/areas.php';
 
-Token::generateToken();
+if(!isset($_SESSION['token'])) {
+    Token::generateToken();
+} else {
+    Token::setToken($_SESSION['token']);
+}
 
-echo $_SESSION['token'];
 $uri = $_GET['uri'];
 foreach($customRouters as $route) {
     $pattern = '/^' . str_replace('/', '\/', $route->getRoute()) . '/';
@@ -59,6 +62,55 @@ spl_autoload_register(function($class) {
 
 View::$controllerName = $controller;
 View::$actionName = $action;
+
+Token::tokenValidationCheck();
+
+$refc = new \ReflectionClass($controllerName);
+$method = $refc->getMethod($action);
+if(count($method->getParameters()) > 0 && is_object($method->getParameters()[0])) {
+    $propertyObject = $method->getParameters()[0]->getClass();
+    if(is_object($propertyObject)) {
+        $properties = $propertyObject->getProperties();
+
+        foreach($properties as $property) {
+            if(!isset($_POST[$property->getName()])) {
+                throw new \Exception("Invalid properties for binding model");
+            }
+        }
+
+        $bindingModelName = $propertyObject->getName();
+        $bindingModelObject = new $bindingModelName;
+        foreach($properties as $property) {
+            $method = 'set' . ucfirst($property->getName());
+            $bindingModelObject->$method($_POST[$property->getName()]);
+        }
+
+        $requestUri = array();
+        $requestUri[0] = $bindingModelObject;
+    }
+}
+
+$methodDoc = $method->getDocComment();
+preg_match_all('/@[a-zA-Z]+/', $methodDoc, $matches);
+foreach($matches[0] as $match) {
+    if(strtolower($match) == "@get") {
+        if(strtolower($_SERVER['REQUEST_METHOD']) != "get") {
+            throw new \Exception("This method can be called only on GET");
+        }
+    } else if(strtolower($match) == "@post") {
+        if(strtolower($_SERVER['REQUEST_METHOD']) != "post") {
+            throw new \Exception("This method can be called only on GET");
+        }
+    } else if(strtolower($match) == "@put") {
+        if(strtolower($_SERVER['REQUEST_METHOD']) != "put") {
+            throw new \Exception("This method can be called only on GET");
+        }
+    } else if(strtolower($match) == "@delete") {
+        if(strtolower($_SERVER['REQUEST_METHOD']) != "delete") {
+            throw new \Exception("This method can be called only on GET");
+        }
+    }
+}
 
 $controllerInstance = new $controllerName();
 

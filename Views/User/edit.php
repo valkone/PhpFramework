@@ -56,3 +56,33 @@ $testArray = [
         ->render();
     ?>
 </script>
+
+<form action="http://localhost/PhpFrameworkGit/trunk/User/testToken" method="post">
+    <?php
+        \Framework\ViewHelpers\TextField::create()
+        ->addAttribute('name', 'ivan')
+        ->addAttribute('class', 'button')
+        ->render();
+
+        \Framework\ViewHelpers\TokenHelper::create()->generateHiddenField();
+    ?>
+    <input type="submit" value="go" />
+</form>
+
+
+<form action="http://localhost/PhpFrameworkGit/trunk/User/testBinding" method="post">
+    <?php
+    \Framework\ViewHelpers\TextField::create()
+        ->addAttribute('name', 'id')
+        ->render();
+
+    \Framework\ViewHelpers\TextField::create()
+        ->addAttribute('name', 'name')
+        ->render();
+
+    \Framework\ViewHelpers\TextField::create()
+        ->addAttribute('name', 'password')
+        ->render();
+    ?>
+    <input type="submit" value="go" />
+</form>

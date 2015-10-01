@@ -12,15 +12,19 @@ class Token {
         $_SESSION['token'] = $token;
     }
 
-    public static function isValidToken($token) {
-        if($token == self::$token) {
-            return true;
-        }
-
-        return false;
-    }
-
     public static function getToken() {
         return self::$token;
+    }
+
+    public static function setToken($token) {
+        self::$token = $token;
+    }
+
+    public static function tokenValidationCheck() {
+        if(isset($_POST['_token'])) {
+            if($_SESSION['token'] != $_POST['_token']) {
+                throw new \Exception("Invalid token");
+            }
+        }
     }
 }
