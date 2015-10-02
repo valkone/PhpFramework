@@ -5,13 +5,8 @@ require 'Views/header.php';
     <div id="content">
         <div id="maincontent">
             <div id="mcontent">
-                <?php
-                    if(isset($model['error'])) {
-                        echo $model['error'];
-                    } else if(isset(self::$viewBag["productDeleted"]) && self::$viewBag["productDeleted"]){
-                        echo "Product successfully deleted";
-                    }
-                ?>
+                <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
+                    isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
                 <?php foreach($model['products'] as $product): ?>
                     <?= $product['name']; ?> - <a href="<?= __MAIN_URL__ . "Products/Delete/" . $product['id']; ?>">Delete</a><br />
                 <?php endforeach; ?>

@@ -53,7 +53,7 @@ class CategoriesModel {
         $addCategorySql = 'INSERT INTO categories(name) VALUES("'.$categoryName.'")';
 
         if($conn->query($addCategorySql)) {
-            View::$viewBag['added'] = true;
+            View::$viewBag['successMessage'] = "Category successfully added";
         } else {
             View::$viewBag['errors'][] = "Database error";
         }
@@ -64,7 +64,7 @@ class CategoriesModel {
 
         $deleteCategorySql = 'UPDATE categories SET isDeleted = 1 WHERE id="'.$categoryId.'"';
         if($conn->query($deleteCategorySql)) {
-            View::$viewBag['deleted'] = true;
+            View::$viewBag['successMessage'] = "Category successfully deleted";
         } else {
             View::$viewBag['errors'][] = "Database error";
         }

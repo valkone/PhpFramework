@@ -5,16 +5,8 @@ require 'Views/header.php';
     <div id="content">
         <div id="maincontent">
             <div id="mcontent">
-                <?php if(isset(self::$viewBag["errors"]) && count(self::$viewBag["errors"]) > 0): ?>
-                    <?php foreach(self::$viewBag["errors"] as $error): ?>
-                        <div class="error">
-                            <?= $error; ?>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-                <?php if(isset(self::$viewBag["edited"])): ?>
-                    <div class="success">Product successfully edited</div>
-                <?php endif; ?>
+                <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
+                    isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
                 Edit: <?= $model['product']['name']; ?>
                 <form method="post">
                     <p>Quantity:</p>

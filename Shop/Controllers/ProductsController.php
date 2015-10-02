@@ -116,7 +116,7 @@ class ProductsController {
             try {
                 $productModel->deleteProductById($productId);
             } catch(\Exception $e) {
-                $model['error'] = $e->getMessage();
+                $model['errors'][] = $e->getMessage();
             }
         }
 

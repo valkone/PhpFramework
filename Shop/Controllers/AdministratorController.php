@@ -32,6 +32,7 @@ class AdministratorController {
             $userModel = new UsersModels();
             $userModel->banIp($ip);
         }
+
         return new View();
     }
 }

@@ -104,7 +104,7 @@ class ProductsModel {
             throw new \Exception("Database error");
         }
 
-        View::$viewBag['productAdded'] = true;
+        View::$viewBag['successMessage'] = "Product successfully added";
     }
 
     public function deleteProductById($id) {
@@ -112,15 +112,15 @@ class ProductsModel {
 
         $validIdSql = 'SELECT id FROM products WHERE id="'.$id.'"';
         if($conn->query($validIdSql)->rowCount() == 0) {
-            throw new \Exception("Invalid product");
-        }
+            View::$viewBag["errors"][] = "Invalid product";
+        } else {
+            $deleteProductSql = 'UPDATE products SET isDeleted=1 WHERE id="'.$id.'"';
+            if(!$conn->query($deleteProductSql)){
+                throw new \Exception("Database error");
+            }
 
-        $deleteProductSql = 'UPDATE products SET isDeleted=1 WHERE id="'.$id.'"';
-        if(!$conn->query($deleteProductSql)){
-            throw new \Exception("Database error");
+            View::$viewBag['successMessage'] = "Product successfully deleted";
         }
-
-        View::$viewBag['productDeleted'] = true;
     }
 
     public function editProduct($id, $quantity, $category, $oldCategory) {
@@ -142,7 +142,7 @@ class ProductsModel {
             throw new \Exception("Database error");
         }
 
-        View::$viewBag['edited'] = true;
+        View::$viewBag['successMessage'] = "Product successfully edited";
     }
 
     public function addToCard($productId, $quantity, $productName) {
@@ -169,7 +169,7 @@ class ProductsModel {
         $_SESSION['cart']['products'][$productId]["quantity"] = $cardQuantity;
         $_SESSION['cart']['products'][$productId]["name"] = $productName;
 
-        View::$viewBag['added'] = true;
+        View::$viewBag['successMessage'] = "Product successfully added in your cart";
     }
 
     public function getUserProducts($id) {

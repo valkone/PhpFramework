@@ -5,17 +5,8 @@ require 'Views/header.php';
     <div id="content">
         <?php require 'Views/aside.php'; ?>
         <div id="main-content">
-                    <?php
-                        if(isset(self::$viewBag["errors"]) && count(self::$viewBag["errors"]) > 0) {
-                            ?><div class="errors"><?php
-                                foreach(self::$viewBag["errors"] as $error) {
-                                    echo $error."<br />";
-                                }
-                            ?></div><?php
-                        } else if(isset(self::$viewBag["registered"]) && self::$viewBag["registered"]) {
-                            echo "You successfully registered. Please log-in.";
-                        }
-                    ?>
+            <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
+                isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
             <div id="form">
                 <form method="post">
                     <p>Username:</p> <input type="text" name="username" /><br />

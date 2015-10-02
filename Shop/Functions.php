@@ -35,4 +35,17 @@ class Functions {
             return false;
         }
     }
+
+    public static function requestMessages($errors, $successMessage) {
+        if(isset($errors) && count($errors) > 0): ?>
+            <?php foreach($errors as $error): ?>
+                <div class="error">
+                    <?= $error; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <?php if(isset($successMessage)): ?>
+            <div class="success"><?= $successMessage; ?></div>
+        <?php endif;
+    }
 }

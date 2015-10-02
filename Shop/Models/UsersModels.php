@@ -7,20 +7,36 @@ use Framework\View;
 
 class UsersModels {
 
-    public function register($username, $pass, $email) {
-        $conn = DB::connect();
+    public function register($username, $pass, $pass2, $email) {
+        $errors = [];
 
-        $checkForEmailOrUsernameSql = 'SELECT * FROM users WHERE username = "'.$username.'" OR email = "'.$email.'"';
-        if($conn->query($checkForEmailOrUsernameSql)->rowCount() > 0) {
-            throw new \Exception("The username or email is already in our database");
-        } else {
-            $registerSql = 'INSERT INTO users(username, email, registered_on, password)
-                        VALUES("'.$username.'", "'.$email.'", "'.time().'", "'.md5($pass).'")';
-            if($conn->query($registerSql)) {
-                View::$viewBag['registered'] = true;
+        if($pass != $pass2) {
+            $errors[] = "The passwords does not match";
+        }
+        if($username > 30 || strlen($username) == 0) {
+            $errors[] = "Invalid username";
+        }
+        if(strlen($email) > 60 || strlen($email) == 0) {
+            $errors[] = "Invalid email";
+        }
+
+        if(count($errors) == 0) {
+            $conn = DB::connect();
+
+            $checkForEmailOrUsernameSql = 'SELECT * FROM users WHERE username = "'.$username.'" OR email = "'.$email.'"';
+            if($conn->query($checkForEmailOrUsernameSql)->rowCount() > 0) {
+                View::$viewBag['errors'][] = "The username or email is already in our database";
             } else {
-                throw new \Exception("Database error");
+                $registerSql = 'INSERT INTO users(username, email, registered_on, password)
+                        VALUES("'.$username.'", "'.$email.'", "'.time().'", "'.md5($pass).'")';
+                if($conn->query($registerSql)) {
+                    View::$viewBag['successMessage'] = "You successfully registered. Please log-in.";
+                } else {
+                    throw new \Exception("Database error");
+                }
             }
+        } else {
+            View::$viewBag['errors'] = $errors;
         }
     }
 

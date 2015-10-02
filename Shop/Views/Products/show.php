@@ -16,16 +16,8 @@ require 'Views/header.php';
         </div>
     </div>
     <div id="main-content">
-        <?php if(isset(self::$viewBag["errors"]) && count(self::$viewBag["errors"]) > 0): ?>
-            <?php foreach(self::$viewBag["errors"] as $error): ?>
-                <div class="error">
-                    <?= $error; ?>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-        <?php if(isset(self::$viewBag["added"])): ?>
-            <div class="success">Product successfully added in your cart</div>
-        <?php endif; ?>
+        <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
+            isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
         <div id="product">
 
             <div id="product-picture">
