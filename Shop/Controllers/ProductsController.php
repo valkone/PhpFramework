@@ -23,6 +23,7 @@ class ProductsController {
         if(isset($_POST['addToCardButton'])) {
             $quantity = (int)$_POST['quantity'];
             $productId = (int)$_POST['productId'];
+            $productName = $_POST['productName'];
 
             $errors = [];
             if($quantity <= 0) {
@@ -31,7 +32,7 @@ class ProductsController {
 
             if(count($errors) == 0) {
                 try {
-                    $productModel->addToCard($productId, $quantity);
+                    $productModel->addToCard($productId, $quantity, $productName);
                 } catch(\Exception $e) {
                     View::$viewBag['errors'][] = $e->getMessage();
                 }

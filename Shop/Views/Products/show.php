@@ -69,6 +69,7 @@ require 'Views/header.php';
                 <div id="buy-button-content">
                     <?php if(isset($_SESSION['is_logged'])): ?>
                         <input type="hidden" name="productId" value="<?= $model['product']['ProductId']; ?>" />
+                        <input type="hidden" name="productName" value="<?= $model['product']['name']; ?>" />
                         <input type="submit" id="buy-button" name="addToCardButton" value="ADD TO CARD" />
                     <?php endif; ?>
                 </form>

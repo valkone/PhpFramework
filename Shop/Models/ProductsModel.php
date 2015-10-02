@@ -145,11 +145,11 @@ class ProductsModel {
         View::$viewBag['edited'] = true;
     }
 
-    public function addToCard($productId, $quantity) {
+    public function addToCard($productId, $quantity, $productName) {
         $db = DB::connect();
 
         if(isset($_SESSION['cart']['products'][$productId])) {
-            $cardQuantity = $_SESSION['cart']['products'][$productId] + $quantity;
+            $cardQuantity = $_SESSION['cart']['products'][$productId]["quantity"] + $quantity;
         } else {
             $cardQuantity = $quantity;
         }
@@ -166,7 +166,8 @@ class ProductsModel {
             throw new \Exception("Invalid quantity");
         }
 
-        $_SESSION['cart']['products'][$productId] = $cardQuantity;
+        $_SESSION['cart']['products'][$productId]["quantity"] = $cardQuantity;
+        $_SESSION['cart']['products'][$productId]["name"] = $productName;
 
         View::$viewBag['added'] = true;
     }
