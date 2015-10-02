@@ -2,6 +2,7 @@
 
 namespace Framework\Controllers;
 
+use Framework\Models\CartModel;
 use Framework\Models\CategoriesModel;
 use Framework\View;
 
@@ -20,5 +21,10 @@ class CartController {
         unset($_SESSION['cart']['products'][$id]);
         header("Location: " . __MAIN_URL__ . "/Cart/Show");
         exit;
+    }
+
+    public function checkout() {
+        $cardModel = new CartModel();
+        $cardModel->checkout();
     }
 }

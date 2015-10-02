@@ -1,5 +1,6 @@
 <?php
 require 'Views/header.php';
+echo '<pre>' . print_r($_SESSION, true) . '</pre>';
 ?>
     <div id="content">
         <?php require 'Views/aside.php'; ?>
@@ -9,6 +10,7 @@ require 'Views/header.php';
                 <a href="<?= __MAIN_URL__ . "Products/Show/" . $id; ?>"><?= $product['name']; ?></a> - quantity(<?= $product['quantity']; ?>)
                 <a href="<?= __MAIN_URL__ . "Cart/Delete/" . $id; ?>">Remove</a><br />
             <?php endforeach; ?>
+            <a href="<?= __MAIN_URL__ . "Cart/Checkout"; ?>">Checkout</a>
         </div>
         <div class="clear"></div>
     </div>
