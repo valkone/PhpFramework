@@ -15,13 +15,30 @@ class ProductsController {
         try {
             $product = $productModel->getProductById($id);
         } catch(\Exception $e) {
-            echo $e->getMessage();
-            exit;
             header("Location: " . __MAIN_URL__ . __HOME_DIRECTORY__);
             exit;
         }
-
         $model["product"] = $product;
+
+        if(isset($_POST['addToCardButton'])) {
+            $quantity = (int)$_POST['quantity'];
+            $productId = (int)$_POST['productId'];
+
+            $errors = [];
+            if($quantity <= 0) {
+                $errors[] = "Invalid quantity";
+            }
+
+            if(count($errors) == 0) {
+                try {
+                    $productModel->addToCard($productId, $quantity);
+                } catch(\Exception $e) {
+                    View::$viewBag['errors'][] = $e->getMessage();
+                }
+            } else {
+                View::$viewBag['errors'] = $errors;
+            }
+        }
 
         return new View($model);
     }

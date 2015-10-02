@@ -15,10 +15,21 @@ require 'Views/header.php';
         </div>
     </div>
     <div id="main-content">
+        <?php if(isset(self::$viewBag["errors"]) && count(self::$viewBag["errors"]) > 0): ?>
+            <?php foreach(self::$viewBag["errors"] as $error): ?>
+                <div class="error">
+                    <?= $error; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <?php if(isset(self::$viewBag["added"])): ?>
+            <div class="success">Product successfully added in your cart</div>
+        <?php endif; ?>
         <div id="product">
+
             <div id="product-picture">
                 <div id="main-pic">
-                    <img src="images/product.jpg" />
+                    <img src="#" />
                 </div>
                 <!--<div id="small-pics">
                     <div class="small-pic">
@@ -50,13 +61,20 @@ require 'Views/header.php';
                 </div>
                 <div id="quantity">
                     Quantity
-                    <input type="text" id="quantity-input" value="1"/>
+                <form method="post">
+                    <input type="text" name="quantity" id="quantity-input" value="1"/>
                     <a href="javascript: void(0);" id="add-quantity">+</a>
                     <a href="javascript: void(0);" id="remove-quantity">-</a>
                 </div>
                 <div id="buy-button-content">
-                    <button id="buy-button">ADD TO CARD</button>
-                    <a href="<?= __MAIN_URL__ . "Products/Edit/" . $model['product']['ProductId']; ?>" id="buy-button">Edit</a>
+                    <?php if(isset($_SESSION['is_logged'])): ?>
+                        <input type="hidden" name="productId" value="<?= $model['product']['ProductId']; ?>" />
+                        <input type="submit" id="buy-button" name="addToCardButton" value="ADD TO CARD" />
+                    <?php endif; ?>
+                </form>
+                    <?php if(isset($_SESSION['editor']) || isset($_SESSION['admin'])): ?>
+                        <a href="<?= __MAIN_URL__ . "Products/Edit/" . $model['product']['ProductId']; ?>" id="buy-button">Edit</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

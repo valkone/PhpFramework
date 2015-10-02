@@ -144,4 +144,30 @@ class ProductsModel {
 
         View::$viewBag['edited'] = true;
     }
+
+    public function addToCard($productId, $quantity) {
+        $db = DB::connect();
+
+        if(isset($_SESSION['cart']['products'][$productId])) {
+            $cardQuantity = $_SESSION['cart']['products'][$productId] + $quantity;
+        } else {
+            $cardQuantity = $quantity;
+        }
+
+        $getProductQuantitySql = 'SELECT quantity FROM products WHERE id="'.$productId.'"';
+        $product = $db->query($getProductQuantitySql);
+
+        if($product->rowCount() == 0) {
+            throw new \Exception("Invalid product");
+        }
+
+        $productQuantity = $product->fetch()["quantity"];
+        if($cardQuantity > $productQuantity) {
+            throw new \Exception("Invalid quantity");
+        }
+
+        $_SESSION['cart']['products'][$productId] = $cardQuantity;
+
+        View::$viewBag['added'] = true;
+    }
 }

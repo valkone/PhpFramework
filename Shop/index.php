@@ -4,8 +4,6 @@ namespace Framework;
 
 session_start();
 
-$_SESSION['editor'] = true;
-
 require_once 'configurations/routers.php';
 require_once 'configurations/main.php';
 require_once 'Token.php';
