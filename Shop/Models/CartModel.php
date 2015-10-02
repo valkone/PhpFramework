@@ -41,6 +41,7 @@ class CartModel {
             unset($_SESSION['cart']['products'][$id]);
         }
 
-        // TODO: redirect to user products
+        header("Location: " . __MAIN_URL__ . "Users/Products");
+        exit;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+$websiteTitle = "Shop :: IP Ban";
 require 'Views/header.php';
 ?>
     <div id="content">

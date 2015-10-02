@@ -1,4 +1,5 @@
 <?php
+$websiteTitle = "Shop :: Delete Product";
 require 'Views/header.php';
 ?>
     <div id="content">

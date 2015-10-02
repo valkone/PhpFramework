@@ -80,7 +80,6 @@ if(Functions::isUserBanned()) {
     exit;
 }
 
-
 View::$controllerName = $controller;
 View::$actionName = $action;
 

@@ -1,6 +1,6 @@
 <?php
+$websiteTitle = "Shop :: My Product";
 require 'Views/header.php';
-//echo '<pre>' . print_r($model, true) . '</pre>';
 ?>
     <div id="content">
         <?php require 'Views/aside.php'; ?>

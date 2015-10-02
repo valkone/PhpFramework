@@ -1,4 +1,5 @@
 <?php
+$websiteTitle = "Shop :: Product";
 require 'Views/header.php';
 ?>
 <div id="content">
@@ -29,7 +30,13 @@ require 'Views/header.php';
 
             <div id="product-picture">
                 <div id="main-pic">
-                    <img src="#" />
+                    <img src="<?php
+                        if(strlen($model['product']['picture']) == 0) {
+                            echo __DEFAULT_PICTURE__;
+                        } else {
+                            echo $model['product']['picture'];
+                        }
+                    ?>" />
                 </div>
                 <!--<div id="small-pics">
                     <div class="small-pic">

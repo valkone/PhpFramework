@@ -1,4 +1,5 @@
 <?php
+$websiteTitle = "Shop :: Login";
 require 'Views/header.php';
 ?>
     <div id="content">

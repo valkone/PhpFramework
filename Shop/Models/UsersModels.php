@@ -56,7 +56,7 @@ class UsersModels {
     public function getUserInfo($username) {
         $conn = DB::connect();
 
-        $getUserInfo = 'SELECT username, email, registered_on FROM users WHERE username="'.$username.'"';
+        $getUserInfo = 'SELECT username, email, registered_on, cash FROM users WHERE username="'.$username.'"';
         $userInfo = $conn->query($getUserInfo)->fetch();
 
         return $userInfo;

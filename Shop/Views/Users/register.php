@@ -1,4 +1,5 @@
 <?php
+$websiteTitle = "Shop :: Register";
 require 'Views/header.php';
 ?>
     <div id="content">

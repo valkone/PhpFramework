@@ -276,6 +276,11 @@ tab {
     vertical-align: middle;
 }
 
+#main-pic img {
+    width: 303px;
+    max-height: 303px;
+}
+
 #product-picture {
     float: left;
 }

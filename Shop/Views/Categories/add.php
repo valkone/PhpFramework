@@ -1,4 +1,5 @@
 <?php
+$websiteTitle = "Shop :: Add Category";
 require 'Views/header.php';
 ?>
     <div id="content">

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>ECommerce Home</title>
+    <title><?= $websiteTitle; ?></title>
     <link rel="stylesheet" href="<?= __MAIN_URL__ ?>styles/style.css" />
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>

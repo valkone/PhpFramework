@@ -1,4 +1,5 @@
 <?php
+$websiteTitle = "Shop :: Add Product";
 require 'Views/header.php';
 ?>
     <div id="content">

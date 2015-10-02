@@ -1,4 +1,5 @@
 <?php
+$websiteTitle = "Shop :: Home";
 require 'Views/header.php';
 ?>
     <div id="content">
@@ -10,7 +11,13 @@ require 'Views/header.php';
                     <div class="product">
                         <a href="<?= __MAIN_URL__ .  "Products/Show/" . $newProduct["id"]; ?>">
                             <div class="product-image">
-                                <img src="images/product.jpg"/>
+                                <img src="<?php
+                                if(strlen($newProduct['picture']) == 0) {
+                                    echo __DEFAULT_PICTURE__;
+                                } else {
+                                    echo $newProduct['picture'];
+                                }
+                                ?>" />
                             </div>
                             <div class="product-name">
                                 <?= $newProduct["name"]; ?>
@@ -30,7 +37,13 @@ require 'Views/header.php';
                     <div class="product">
                         <a href="<?= __MAIN_URL__ .  "Products/Show/" . $secondHandProduct["id"]; ?>">
                             <div class="product-image">
-                                <img src="images/product.jpg"/>
+                                <img src="<?php
+                                if(strlen($secondHandProduct['picture']) == 0) {
+                                    echo __DEFAULT_PICTURE__;
+                                } else {
+                                    echo $newProduct['picture'];
+                                }
+                                ?>" />
                             </div>
                             <div class="product-name">
                                 <?= $secondHandProduct["name"]; ?>
