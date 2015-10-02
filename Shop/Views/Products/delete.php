@@ -1,10 +1,8 @@
 <?php
 require 'Views/header.php';
-//echo '<pre>'.print_r($model['products'], true).'</pre>';
 ?>
     <div id="content">
-        <?php require 'Views/aside.php'; ?>
-        <div id="main-content">
+        <div id="maincontent">
             <div id="mcontent">
                 <?php
                     if(isset($model['error'])) {

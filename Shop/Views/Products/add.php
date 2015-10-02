@@ -2,8 +2,7 @@
 require 'Views/header.php';
 ?>
     <div id="content">
-        <?php require 'Views/aside.php'; ?>
-        <div id="main-content">
+        <div id="maincontent">
             <div id="mcontent">
                 <?php if(isset(self::$viewBag["errors"]) && count(self::$viewBag["errors"]) > 0): ?>
                         <?php foreach(self::$viewBag["errors"] as $error): ?>

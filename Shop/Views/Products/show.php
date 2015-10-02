@@ -56,6 +56,7 @@ require 'Views/header.php';
                 </div>
                 <div id="buy-button-content">
                     <button id="buy-button">ADD TO CARD</button>
+                    <a href="<?= __MAIN_URL__ . "Products/Edit/" . $model['product']['ProductId']; ?>" id="buy-button">Edit</a>
                 </div>
             </div>
         </div>

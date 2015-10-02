@@ -44,11 +44,7 @@ class CategoriesController {
             }
         }
 
-        $categoriesModel = new CategoriesModel();
-        $categories = $categoriesModel->getAllCategories();
-        $model["categories"] = $categories;
-
-        return new View($model);
+        return new View();
     }
 
     public function delete($categoryId = null) {

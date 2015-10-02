@@ -53,8 +53,22 @@ class ProductsModel {
     public function getProductById($id) {
         $conn = DB::connect();
 
-        $productByIdSql = 'SELECT name, price, description, quantity, `condition`, picture
-                           FROM products WHERE id="'.$id.'"  AND quantity > 0 AND isDeleted = 0';
+        $productByIdSql = 'SELECT
+                                p.name,
+                                p.price,
+                                p.description,
+                                p.quantity,
+                                p.`condition`,
+                                p.picture,
+                                c.name as CategoryName,
+                                c.id as CategoryId,
+                                p.id as ProductId
+                           FROM products as p
+                           JOIN category_product as cp
+                           ON p.id = cp.product_id
+                           JOIN categories as c
+                           ON c.id = cp.category_id
+                           WHERE p.id="'.$id.'"  AND p.quantity > 0 AND p.isDeleted = 0';
 
         $product = $conn->query($productByIdSql)->fetch();
 
@@ -107,5 +121,27 @@ class ProductsModel {
         }
 
         View::$viewBag['productDeleted'] = true;
+    }
+
+    public function editProduct($id, $quantity, $category, $oldCategory) {
+        $db = DB::connect();
+
+        $checkIfCategoryIsValidSql = 'SELECT id FROM categories WHERE id="'.$category.'"';
+        if($db->query($checkIfCategoryIsValidSql)->rowCount() == 0) {
+            throw new \Exception("Invalid category");
+        }
+
+        $editQuantitySql = 'UPDATE products SET quantity = "'.$quantity.'" WHERE id = "'.$id.'"';
+        if(!$db->query($editQuantitySql)) {
+            throw new \Exception("Database error");
+        }
+
+        $editCategorySql = 'UPDATE category_product SET category_id = "'.$category.'"
+                            WHERE product_id = "'.$id.'" AND category_id = "'.$oldCategory.'"';
+        if(!$db->query($editCategorySql)) {
+            throw new \Exception("Database error");
+        }
+
+        View::$viewBag['edited'] = true;
     }
 }

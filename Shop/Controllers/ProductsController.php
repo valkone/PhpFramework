@@ -15,6 +15,8 @@ class ProductsController {
         try {
             $product = $productModel->getProductById($id);
         } catch(\Exception $e) {
+            echo $e->getMessage();
+            exit;
             header("Location: " . __MAIN_URL__ . __HOME_DIRECTORY__);
             exit;
         }
@@ -87,6 +89,48 @@ class ProductsController {
 
         $products = $productModel->getAllProducts();
         $model['products'] = $products;
+
+        return new View($model);
+    }
+
+    public function edit($productId) {
+        Functions::EditorAuthorization();
+
+        $productModel = new ProductsModel();
+        try {
+            $product = $productModel->getProductById($productId);
+            $model["product"] = $product;
+        } catch(\Exception $e) {
+            header("Location: " . __MAIN_URL__ . __HOME_DIRECTORY__);
+            exit;
+        }
+
+        if(isset($_POST['editProductButton'])) {
+            $quantity = (int)$_POST['quantity'];
+            $category = (int)$_POST['category'];
+            $oldCategory = (int)$_POST['oldCategory'];
+            $productId = (int)$_POST['productId'];
+
+            $errors = [];
+            if($quantity == 0) {
+                $errors[] = "Invalid quantity";
+            }
+            if($category == 0) {
+                $errors[] = "Invalid category";
+            }
+
+            if(count($errors) == 0) {
+                $productModel = new ProductsModel();
+                try {
+                    $productModel->editProduct($productId, $quantity, $category, $oldCategory);
+                } catch(\Exception $e) {
+                    View::$viewBag['errors'] = $e->getMessage();
+                }
+            } else {
+                View::$viewBag['errors'] = $errors;
+            }
+        }
+
 
         $categoriesModel = new CategoriesModel();
         $categories = $categoriesModel->getAllCategories();
