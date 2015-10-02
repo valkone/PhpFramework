@@ -62,5 +62,40 @@ class UsersModels {
         return $userInfo;
     }
 
+    public function banUser($username) {
+        $db = DB::connect();
 
+        $isUserValidSql = 'SELECT id FROM users WHERE username = "'.$username.'"';
+        if($db->query($isUserValidSql)->rowCount() == 0) {
+            View::$viewBag['errors'][] = "Invalid username";
+        } else {
+            $banSql = 'UPDATE users SET isBanned = 1 WHERE username = "'.$username.'"';
+            if($db->query($banSql)) {
+                View::$viewBag['successMessage'] = "You successfully banned " . $username;
+            }
+        }
+    }
+
+    public function banIp($ip) {
+        $db = DB::connect();
+
+        $errors = [];
+        if(strlen($ip) < 7) {
+            $errors[] = "Invalid ip";
+        }
+
+        $ifIpIsBanned = 'SELECT ip FROM banned_ips WHERE ip = "'.$ip.'"';
+        if($db->query($ifIpIsBanned)->rowCount() > 0) {
+            $errors[] = "The ip is already banned";
+        }
+
+        if(count($errors) == 0) {
+            $banIpSql = 'INSERT INTO banned_ips(ip) VALUES("'.$ip.'")';
+            if($db->query($banIpSql)) {
+                View::$viewBag['successMessage'] = "You successfully banned " . $ip;
+            }
+        } else {
+            View::$viewBag['errors'] = $errors;
+        }
+    }
 }

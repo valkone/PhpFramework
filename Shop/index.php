@@ -8,6 +8,8 @@ require_once 'configurations/routers.php';
 require_once 'configurations/main.php';
 require_once 'Token.php';
 require_once 'configurations/areas.php';
+require_once 'Functions.php';
+
 
 if(!isset($_SESSION['token'])) {
     Token::generateToken();
@@ -65,6 +67,19 @@ spl_autoload_register(function($class) {
     $fullClassName = implode(DIRECTORY_SEPARATOR, $splitted);
     require_once $fullClassName . '.php';
 });
+
+
+if(Functions::isIpBanned()) {
+    echo "You are banned!";
+    exit;
+}
+
+if(Functions::isUserBanned()) {
+    echo 'Your account is banned! Reload page to see website content.';
+    session_destroy();
+    exit;
+}
+
 
 View::$controllerName = $controller;
 View::$actionName = $action;
