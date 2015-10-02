@@ -13,7 +13,7 @@ require 'Views/header.php';
                         <?php endforeach; ?>
                 <?php endif; ?>
                 <?php if(isset(self::$viewBag["productAdded"])): ?>
-                    <div class="success">Product successfuly added</div>
+                    <div class="success">Product successfully added</div>
                 <?php endif; ?>
                 <form method="post">
                     <p>Name:</p>

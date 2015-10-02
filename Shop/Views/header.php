@@ -44,12 +44,12 @@
         </div>
         <div id="header-main">
             <div id="logo">
-                <a href="#"><img src="<?= __MAIN_URL__ ?>images/logo.jpg" /></a>
+                <a href="<?= __MAIN_URL__ . __HOME_DIRECTORY__ ?>"><img src="<?= __MAIN_URL__ ?>images/logo.jpg" /></a>
             </div>
             <div id="search">
                 <form>
-                    <input type="text" name="search" id="search-input" placeholder="Enter your search key ... " />
-                    <input type="submit" value="Search" id="search-button" />
+                    <input type="text" name="search" class="customInput" placeholder="Enter your search key ... " />
+                    <input type="submit" value="Search" class="customButton" />
                 </form>
             </div>
             <div class="clear"></div>

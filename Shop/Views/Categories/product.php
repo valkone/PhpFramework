@@ -5,10 +5,10 @@ require 'Views/header.php';
         <?php require 'Views/aside.php'; ?>
         <div id="main-content">
             <div class="product-section">
-                <div class="label">NEW PRODUCTS</div>
+                <div class="label">Products</div>
                 <?php foreach($model["products"] as $product): ?>
                     <div class="product">
-                        <a href="#">
+                        <a href="<?= __MAIN_URL__ .  "Products/Show/" . $product["ProductId"]; ?>">
                             <div class="product-image">
                                 <img src="images/product.jpg"/>
                             </div>

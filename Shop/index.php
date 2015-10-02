@@ -58,6 +58,7 @@ if(!isset($controller) || $controller == "") {
     exit;
 }
 
+
 $controllerName = $controllerNamespace . ucfirst($controller) . 'Controller';
 
 spl_autoload_register(function($class) {

@@ -8,7 +8,7 @@ require 'Views/header.php';
                 <div class="label">NEW PRODUCTS</div>
                 <?php foreach($model["newProducts"] as $newProduct): ?>
                     <div class="product">
-                        <a href="#">
+                        <a href="<?= __MAIN_URL__ .  "Products/Show/" . $newProduct["id"]; ?>">
                             <div class="product-image">
                                 <img src="images/product.jpg"/>
                             </div>
@@ -28,7 +28,7 @@ require 'Views/header.php';
                 <div class="label">BESTSELLERS</div>
                 <?php foreach($model["secondHandProducts"] as $secondHandProduct): ?>
                     <div class="product">
-                        <a href="#">
+                        <a href="<?= __MAIN_URL__ .  "Products/Show/" . $secondHandProduct["id"]; ?>">
                             <div class="product-image">
                                 <img src="images/product.jpg"/>
                             </div>
