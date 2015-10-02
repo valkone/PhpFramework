@@ -41,6 +41,21 @@ class ProductsController {
             }
         }
 
+        if(isset($_POST['reviewButton'])) {
+            if(!isset($_SESSION['is_logged'])) {
+                header("Location: " . __MAIN_URL__ . __HOME_DIRECTORY__);
+                exit;
+            }
+
+            $review = $_POST['review'];
+            $productId = (int)$_POST['productId'];
+
+            $productModel->addReview($productId, $review, $_SESSION['id']);
+        }
+
+        $reviews = $productModel->getProductReviews($id);
+        $model['reviews'] = $reviews;
+
         return new View($model);
     }
 

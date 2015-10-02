@@ -3,6 +3,7 @@
 namespace Framework\Controllers;
 
 use Framework\Models\CategoriesModel;
+use Framework\Models\ProductsModel;
 use Framework\Models\UsersModels;
 use Framework\View;
 
@@ -68,7 +69,6 @@ class UsersController {
     }
 
     public function Profile() {
-
         $categoriesModel = new CategoriesModel();
         $categories = $categoriesModel->getAllCategories();
         $model["categories"] = $categories;
@@ -84,5 +84,17 @@ class UsersController {
         session_destroy();
         header("Location: " . __MAIN_URL__ . "/Home/home");
         exit;
+    }
+
+    public function Products() {
+        $usersModel = new ProductsModel();
+        $products = $usersModel->getUserProducts($_SESSION['id']);
+        $model["products"] = $products;
+
+        $categoriesModel = new CategoriesModel();
+        $categories = $categoriesModel->getAllCategories();
+        $model["categories"] = $categories;
+
+        return new View($model);
     }
 }

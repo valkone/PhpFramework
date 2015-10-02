@@ -27,10 +27,20 @@ class UsersModels {
     public function login($username, $password) {
         $conn = DB::connect();
 
-        $checkForValidLoginInfo = 'SELECT username FROM users WHERE username="'.$username.'" AND password="'.md5($password).'"';
-        if($conn->query($checkForValidLoginInfo)->rowCount() > 0) {
+        $checkForValidLoginInfo = 'SELECT username, id, role FROM users WHERE username="'.$username.'"
+                                    AND password="'.md5($password).'"';
+        $login = $conn->query($checkForValidLoginInfo);
+        if($login->rowCount() > 0) {
+            $userInfo = $login->fetch();
             $_SESSION['is_logged'] = true;
             $_SESSION['username'] = $username;
+            $_SESSION['id'] = $userInfo["id"];
+            $role = $userInfo["role"];
+            if($role == 1) {
+                $_SESSION['editor'] = true;
+            } else if($role == 2) {
+                $_SESSION['admin'] = true;
+            }
             header("Location: " . __MAIN_URL__ . "Home/home");
             exit;
         } else {
@@ -51,4 +61,6 @@ class UsersModels {
 
         return $userInfo;
     }
+
+
 }

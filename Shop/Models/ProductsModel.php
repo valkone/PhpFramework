@@ -171,4 +171,64 @@ class ProductsModel {
 
         View::$viewBag['added'] = true;
     }
+
+    public function getUserProducts($id) {
+        $db = DB::connect();
+
+        $userProductsSql = 'SELECT
+                              pu.quantity as productQuantity,
+                              p.name as productName,
+                              p.price as productPrice,
+                              p.id as productId
+                            FROM product_user as pu
+                            JOIN products as p
+                            ON p.id = pu.product_id';
+
+        $products =  $db->query($userProductsSql)->fetchAll();
+
+        return $products;
+    }
+
+    public function sellUserProducts($userId, $productId) {
+        // TODO: this method
+    }
+
+    public function addReview($productId, $review, $userId)
+    {
+        $db = DB::connect();
+
+        $errors = [];
+        if (strlen($review) == 0 || strlen($review) > 1000) {
+            $errors[] = "Invalid review";
+        }
+
+        $isProductValidSql = 'SELECT id FROM products WHERE id="' . $productId . '"';
+        if ($db->query($isProductValidSql)->rowCount() == 0) {
+            $errors[] = "Invalid product";
+        }
+
+        if (count($errors) == 0) {
+            $addReviewSql = 'INSERT INTO reviews(review, product_id, user_id)
+                        VALUES("' . $review . '", "' . $productId . '", "' . $userId . '")';
+            $db->query($addReviewSql);
+            View::$viewBag['successMessage'] = "Successfully added review";
+        } else {
+            View::$viewBag['errors'] = $errors;
+        }
+    }
+
+    public function getProductReviews($productId) {
+        $db = DB::connect();
+
+        $getProductReviewsSql = 'SELECT
+                                    r.review as review,
+                                    u.username as user
+                                 FROM reviews as r
+                                 JOIN users as u
+                                 ON u.id = r.user_id';
+
+        $reviews = $db->query($getProductReviewsSql)->fetchAll();
+
+        return $reviews;
+    }
 }

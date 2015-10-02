@@ -76,7 +76,28 @@ require 'Views/header.php';
                     <?php if(isset($_SESSION['editor']) || isset($_SESSION['admin'])): ?>
                         <a href="<?= __MAIN_URL__ . "Products/Edit/" . $model['product']['ProductId']; ?>" id="buy-button">Edit</a>
                     <?php endif; ?>
+                    <?php if(isset($_SESSION['is_logged'])): ?>
+                        <a href="javascript: void(0);" onclick="showReviewBox();" id="buy-button">Add Review</a>
+                    <?php endif; ?>
                 </div>
+                <div id="review">
+                    <br />
+                    Review:
+                    <form method="post">
+                        <textarea name="review"></textarea>
+                        <input type="submit" value="Add review" name="reviewButton" />
+                        <input type="hidden" name="productId" value="<?= $model['product']['ProductId']; ?>" />
+                    </form>
+
+                </div>
+                <br />
+                <div class="label">Reviews:</div>
+                <?php foreach($model['reviews'] as $review): ?>
+                    <div class="review">
+                        <div class="review-owner"><?= $review['user']; ?></div>
+                        <div class="review-text"><?= $review['review']; ?></div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -101,4 +122,8 @@ require 'Views/footer.php';
             $("#quantity-input").val(newQuantity);
         }
     });
+
+    function showReviewBox() {
+        $("#review").toggle();
+    }
 </script>

@@ -1,6 +1,5 @@
 <?php
 require 'Views/header.php';
-echo '<pre>' . print_r($_SESSION, true) . '</pre>';
 ?>
     <div id="content">
         <?php require 'Views/aside.php'; ?>

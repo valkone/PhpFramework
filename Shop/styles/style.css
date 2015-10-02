@@ -398,3 +398,7 @@ tab {
     background: #3e3e3e;
     padding: 10px;
 }
+
+#review {
+    display: block;
+}
