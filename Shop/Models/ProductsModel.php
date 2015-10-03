@@ -353,4 +353,45 @@ class ProductsModel {
             View::$viewBag['errors'] = $errors;
         }
     }
+
+    public function addProductToUser($username, $productId, $quantity) {
+        $errors = [];
+
+        if($quantity <= 0) {
+            $errors[] = "Invalid quantity";
+        }
+        $db = DB::connect();
+
+        $getUserId = 'SELECT id FROM users WHERE username =  "'.$username.'"';
+        $userId = $db->query($getUserId);
+        if($userId->rowCount() > 0) {
+            $userId = $userId->fetch()["id"];
+        } else {
+            $errors[] = "Invalid username";
+        }
+
+        $checkProductSql = 'SELECT id FROM products WHERE id = "'.$productId.'"';
+        if($db->query($checkProductSql)->rowCount() == 0) {
+            $errors[] = "Invalid product";
+        }
+
+        if(count($errors) == 0) {
+            $productExistsSql = 'SELECT product_id FROM product_user WHERE product_id = "'.$productId.'"
+                                    AND user_id = "'.$userId.'"';
+
+            if($db->query($productExistsSql)->rowCount() == 0) {
+                $addProductSql = 'INSERT INTO product_user(product_id, user_id, quantity)
+                              VALUES("'.$productId.'", "'.$userId.'", "'.$quantity.'")';
+            } else {
+                $addProductSql = 'UPDATE product_user SET quantity = quantity + "'.$quantity.'"
+                                      WHERE  product_id = "'.$productId.'" AND user_id = "'.$userId.'"';
+            }
+            
+            $db->query($addProductSql);
+
+            View::$viewBag['successMessage'] = "Product added";
+        } else {
+            View::$viewBag['errors'] = $errors;
+        }
+    }
 }

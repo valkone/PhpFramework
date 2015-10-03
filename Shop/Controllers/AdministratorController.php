@@ -133,6 +133,15 @@ class AdministratorController {
 
     public function addProductsToUser() {
         $productModel = new ProductsModel();
+
+        if(isset($_POST['addProductButton'])) {
+            $username = $_POST['username'];
+            $productId = $_POST['productId'];
+            $quantity = $_POST['quantity'];
+
+            $productModel->addProductToUser($username, $productId, $quantity);
+        }
+
         $products = $productModel->getAllProducts();
         $model["products"] = $products;
 

@@ -1,7 +1,6 @@
 <?php
 $websiteTitle = "Shop :: Products";
 require 'Views/header.php';
-echo '<pre>' . print_r($model, true) . '</pre>';
 ?>
     <div id="content">
         <?php require 'Views/aside.php'; ?>
@@ -15,13 +14,14 @@ echo '<pre>' . print_r($model, true) . '</pre>';
                     <p>Username: </p>
                     <input type="text" name="username" />
                     <p>Product: </p>
-                    <select>
+                    <select name="productId">
                         <?php foreach($model['products'] as $product): ?>
                             <option value="<?= $product["id"] ?>"><?= $product["name"]; ?></option>
                         <?php endforeach; ?>
                     </select>
                     <p>Quantity:</p>
                     <input type="text" name="quantity" /><br />
+                    <input type="submit" value="Add" name="addProductButton"/>
                 </form>
                 <div class="clear"></div>
             </div>
