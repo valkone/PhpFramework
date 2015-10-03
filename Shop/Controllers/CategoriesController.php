@@ -31,17 +31,8 @@ class CategoriesController {
         if(isset($_POST['categoryButton'])) {
             $category = $_POST['category'];
 
-            $errors = [];
-            if(strlen($category) == 0 || strlen($category) > 20) {
-                $errors[] = "Invalid category name";
-            }
-
-            if(count($errors) == 0){
-                $categoryModel = new CategoriesModel();
-                $categoryModel->add($category);
-            } else {
-                View::$viewBag["errors"] = $errors;
-            }
+            $categoryModel = new CategoriesModel();
+            $categoryModel->add($category);
         }
 
         return new View();

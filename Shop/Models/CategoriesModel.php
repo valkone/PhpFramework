@@ -48,15 +48,26 @@ class CategoriesModel {
     }
 
     public function add($categoryName) {
-        $conn = DB::connect();
-
-        $addCategorySql = 'INSERT INTO categories(name) VALUES("'.$categoryName.'")';
-
-        if($conn->query($addCategorySql)) {
-            View::$viewBag['successMessage'] = "Category successfully added";
-        } else {
-            View::$viewBag['errors'][] = "Database error";
+        $errors = [];
+        if(strlen($categoryName) == 0 || strlen($categoryName) > 20) {
+            $errors[] = "Invalid category name";
         }
+
+        if(count($errors) == 0){
+            $conn = DB::connect();
+
+            $addCategorySql = 'INSERT INTO categories(name) VALUES("'.$categoryName.'")';
+
+            if($conn->query($addCategorySql)) {
+                View::$viewBag['successMessage'] = "Category successfully added";
+            } else {
+                View::$viewBag['errors'][] = "Database error";
+            }
+        } else {
+            View::$viewBag['errors'] = $errors;
+        }
+
+
     }
 
     public function delete($categoryId) {

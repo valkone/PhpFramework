@@ -23,7 +23,7 @@ class UsersController {
             try {
                 $userModel->login($username, $pass);
             } catch(\Exception $e) {
-                View::$viewBag['error'] = $e->getMessage();
+                View::$viewBag['errors'][] = $e->getMessage();
             }
         }
 

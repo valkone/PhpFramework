@@ -6,13 +6,8 @@ require 'Views/header.php';
         <?php require 'Views/aside.php'; ?>
         <div id="main-content">
             <div id="mcontent">
-                <?php
-                    if(isset(self::$viewBag["error"])) {
-                        echo '<div class="error">';
-                        echo self::$viewBag["error"];
-                        echo "</div>";
-                    }
-                ?>
+                <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
+                    isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
                 <form method="post">
                     <p>Username:</p>
                     <?php
