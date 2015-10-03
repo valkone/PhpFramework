@@ -56,6 +56,10 @@ class ProductsController {
         $reviews = $productModel->getProductReviews($id);
         $model['reviews'] = $reviews;
 
+        $categoriesModel = new CategoriesModel();
+        $categories = $categoriesModel->getAllCategories();
+        $model["categories"] = $categories;
+
         return new View($model);
     }
 

@@ -9,20 +9,20 @@ require 'Views/header.php';
                     isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
                 <form method="post">
                     <p>Name:</p>
-                    <input type="text" name="name" />
+                    <input class="customInput" type="text" name="name" />
                     <p>Price:</p>
-                    <input type="text" name="price" />
+                    <input class="customInput" type="text" name="price" />
                     <p>Description:</p>
-                    <textarea name="desc"></textarea>
+                    <textarea rows="5" cols="42" name="desc"></textarea>
                     <p>Quantity:</p>
-                    <input type="text" name="quantity" />
+                    <input class="customInput" type="text" name="quantity" />
                     <p>Condition:</p>
                     <select name="condition">
                         <option value="1">New</option>
                         <option value="2">Second Hand</option>
                     </select>
                     <p>Picture(URL):</p>
-                    <input type="text" name="pic" />
+                    <input class="customInput" type="text" name="pic" />
                     <p>Category:</p>
                     <select name="category">
                         <?php foreach($model['categories'] as $category): ?>
@@ -30,7 +30,8 @@ require 'Views/header.php';
                         <?php endforeach; ?>
                     </select>
                     <br />
-                    <input type="submit" value="Add Item" name="addItemButton"/>
+                    <br />
+                    <input class="customButton" type="submit" value="Add Item" name="addItemButton"/>
                 </form>
             </div>
         </div>

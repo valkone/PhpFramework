@@ -8,7 +8,7 @@ require 'Views/header.php';
                 <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
                     isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
                 <?php foreach($model['products'] as $product): ?>
-                    <?= $product['name']; ?> - <a href="<?= __MAIN_URL__ . "Products/Delete/" . $product['id']; ?>">Delete</a><br />
+                    <?= $product['name']; ?> - <a class="customLink" href="<?= __MAIN_URL__ . "Products/Delete/" . $product['id']; ?>">Delete</a><br />
                 <?php endforeach; ?>
             </div>
         </div>

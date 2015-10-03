@@ -41,7 +41,7 @@ class CategoriesModel {
                                 ON cp.product_id = p.id
                                 JOIN categories as c
                                 ON cp.category_id = c.id
-                                WHERE cp.category_id="'.$id.'"';
+                                WHERE cp.category_id="'.$id.'" AND p.isDeleted = 0 AND quantity > 0';
         $productsByCategory = $db->query($productsByCategorySql)->fetchAll();
 
         return $productsByCategory;

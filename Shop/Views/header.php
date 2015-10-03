@@ -52,6 +52,9 @@
                 </div>
                 <div id="right-top-menu">
                     <ul>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Administrator/Users"; ?>">Manage Users</a></tab></li>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Administrator/EditBoughtProducts"; ?>">Manage Bought Products</a></tab></li>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Administrator/AddProductsToUser"; ?>">Add Bought Products</a></tab></li>
                         <li><tab><a href="<?= __MAIN_URL__ . "Administrator/BanUser"; ?>">Ban User</a></tab></li>
                         <li><tab><a href="<?= __MAIN_URL__ . "Administrator/BanIp"; ?>">Ban IP</a></tab></li>
                     </ul>
@@ -69,6 +72,7 @@
                         <li><tab><a href="<?= __MAIN_URL__ . "Categories/Add"; ?>">Add Categories</a></tab></li>
                         <li><tab><a href="<?= __MAIN_URL__ . "Categories/Delete"; ?>">Delete Categories</a></tab></li>
                         <li><tab><a href="<?= __MAIN_URL__ . "Products/Add"; ?>">Add Products</a></tab></li>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Products/Reorder"; ?>">Reorder Product</a></tab></li>
                         <li><tab><a href="<?= __MAIN_URL__ . "Products/Delete"; ?>">Delete Products</a></tab></li>
                     </ul>
                 </div>
@@ -78,12 +82,6 @@
         <div id="header-main">
             <div id="logo">
                 <a href="<?= __MAIN_URL__ . __HOME_DIRECTORY__ ?>"><img src="<?= __MAIN_URL__ ?>images/logo.jpg" /></a>
-            </div>
-            <div id="search">
-                <form>
-                    <input type="text" name="search" class="customInput" placeholder="Enter your search key ... " />
-                    <input type="submit" value="Search" class="customButton" />
-                </form>
             </div>
             <div class="clear"></div>
         </div>

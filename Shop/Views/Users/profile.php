@@ -6,10 +6,10 @@ require 'Views/header.php';
         <?php require 'Views/aside.php'; ?>
         <div id="main-content">
             <div id="mcontent">
-                Username: <?= $model["userInfo"]["username"]; ?><br />
-                Email: <?= $model["userInfo"]["email"]; ?><br />
-                Registered On: <?= date('d-m-Y', $model["userInfo"]["registered_on"]); ?><br />
-                Cash: $<?= $model['userInfo']['cash']; ?>
+                Username: <b><?= $model["userInfo"]["username"]; ?></b><br />
+                Email: <b><?= $model["userInfo"]["email"]; ?></b><br />
+                Registered On: <b><?= date('d-m-Y', $model["userInfo"]["registered_on"]); ?></b><br />
+                Cash: <b>$<?= $model['userInfo']['cash']; ?></b>
             </div>
         </div>
         <div class="clear"></div>

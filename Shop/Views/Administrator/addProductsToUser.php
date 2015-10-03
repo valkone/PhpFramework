@@ -10,9 +10,9 @@ require 'Views/header.php';
                 <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
                     isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
 
-                <form method="post">
+                <form method="post" style="background-color: #3E3E3E; padding: 5px;">
                     <p>Username: </p>
-                    <input type="text" name="username" />
+                    <input type="text" class="customInput" name="username" />
                     <p>Product: </p>
                     <select name="productId">
                         <?php foreach($model['products'] as $product): ?>
@@ -20,8 +20,8 @@ require 'Views/header.php';
                         <?php endforeach; ?>
                     </select>
                     <p>Quantity:</p>
-                    <input type="text" name="quantity" /><br />
-                    <input type="submit" value="Add" name="addProductButton"/>
+                    <input type="text" class="customInput" name="quantity" /><br /><br />
+                    <input type="submit" class="customButton" value="Add" name="addProductButton"/>
                 </form>
                 <div class="clear"></div>
             </div>

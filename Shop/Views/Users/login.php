@@ -18,16 +18,19 @@ require 'Views/header.php';
                     <?php
                     \Framework\ViewHelpers\TextField::create()
                         ->addAttribute("name", "username")
+                        ->addAttribute("class", "customInput")
                         ->render();
                     ?>
                     <p>Password:</p>
                     <?php
                     \Framework\ViewHelpers\TextField::create()
                         ->addAttribute("name", "password")
+                        ->addAttribute("class", "customInput")
                         ->render();
                     ?>
                     <br />
-                    <input type="submit" value="Login" name="loginButton" />
+                    <br />
+                    <input type="submit" class="customButton" value="Login" name="loginButton" />
                 </form>
             </div>
         </div>

@@ -386,7 +386,7 @@ class ProductsModel {
                 $addProductSql = 'UPDATE product_user SET quantity = quantity + "'.$quantity.'"
                                       WHERE  product_id = "'.$productId.'" AND user_id = "'.$userId.'"';
             }
-            
+
             $db->query($addProductSql);
 
             View::$viewBag['successMessage'] = "Product added";

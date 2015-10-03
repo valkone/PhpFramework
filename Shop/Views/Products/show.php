@@ -3,18 +3,7 @@ $websiteTitle = "Shop :: Product";
 require 'Views/header.php';
 ?>
 <div id="content">
-    <div id="aside">
-        <div class="label">Tags</div>
-        <div id="tags">
-            <a href="#">Women</a>
-            <a href="#">Fashion</a>
-            <a href="#">Fashion</a>
-            <a href="#">Kids</a>
-            <a href="#">Kids</a>
-            <a href="#">Kids</a>
-            <a href="#">New</a>
-        </div>
-    </div>
+    <?php require 'Views/aside.php'; ?>
     <div id="main-content">
         <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
             isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
@@ -30,17 +19,6 @@ require 'Views/header.php';
                         }
                     ?>" />
                 </div>
-                <!--<div id="small-pics">
-                    <div class="small-pic">
-                        <img src="images/product.jpg" />
-                    </div>
-                    <div class="small-pic">
-                        <img src="images/product.jpg" />
-                    </div>
-                    <div class="small-pic">
-                        <img src="images/product.jpg" />
-                    </div>
-                </div>-->
             </div>
             <div id="product-description">
                 <h1><?= $model['product']['name']; ?></h1>
@@ -86,8 +64,8 @@ require 'Views/header.php';
                     <br />
                     Review:
                     <form method="post">
-                        <textarea name="review"></textarea>
-                        <input type="submit" value="Add review" name="reviewButton" />
+                        <textarea rows="5" cols="30" name="review"></textarea><br />
+                        <input class="customButton" type="submit" value="Add review" name="reviewButton" />
                         <input type="hidden" name="productId" value="<?= $model['product']['ProductId']; ?>" />
                     </form>
 
@@ -96,7 +74,7 @@ require 'Views/header.php';
                 <div class="label">Reviews:</div>
                 <?php foreach($model['reviews'] as $review): ?>
                     <div class="review">
-                        <div class="review-owner"><?= $review['user']; ?></div>
+                        <div class="review-owner"><b><?= $review['user']; ?>:</b></div>
                         <div class="review-text"><?= $review['review']; ?></div>
                     </div>
                 <?php endforeach; ?>

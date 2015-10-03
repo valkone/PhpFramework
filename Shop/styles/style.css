@@ -402,8 +402,40 @@ tab {
 #mcontent {
     background: #3e3e3e;
     padding: 10px;
+    color: #fff;
 }
 
 #review {
     display: none;
+}
+
+form p {
+    color: #fff;
+    padding: 5px 0;
+}
+
+.customLink {
+    text-decoration: none;color:#7D7D7D;
+}
+
+.customLink:hover {
+    text-decoration: underline;
+}
+
+.error {
+    background-color: #ad0f1e;
+    padding: 20px;
+    color: #fff;
+}
+
+.success {
+    background-color: #007b00;
+    padding: 20px;
+    color: #fff;
+}
+
+.review {
+    background-color: #EBEBEB;
+    margin-bottom: 5px;
+    padding: 10px;
 }

@@ -6,15 +6,17 @@ require 'Views/header.php';
         <?php require 'Views/aside.php'; ?>
         <div id="main-content">
             <div class="label">Cart</div>
+            <br />
             <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
                 isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
-            <?php if(isset($_SESSION['cart']['products'])): ?>
+            <?php if(isset($_SESSION['cart']['products']) && count($_SESSION["cart"]["products"]) > 0): ?>
                 <?php foreach($_SESSION['cart']['products'] as $id => $product): ?>
-                    <a href="<?= __MAIN_URL__ . "Products/Show/" . $id; ?>"><?= $product['name']; ?></a> - quantity(<?= $product['quantity']; ?>)
-                    <a href="<?= __MAIN_URL__ . "Cart/Delete/" . $id; ?>">Remove</a><br />
+                    <a class="customLink" href="<?= __MAIN_URL__ . "Products/Show/" . $id; ?>"><?= $product['name']; ?></a> - quantity(<?= $product['quantity']; ?>)
+                    <a class="customLink" href="<?= __MAIN_URL__ . "Cart/Delete/" . $id; ?>">Remove</a><br />
                 <?php endforeach; ?>
+                <br />
                 <form method="post">
-                    <input type="submit" value="Checkout" name="checkoutButton" />
+                    <input type="submit" class="customButton" value="Checkout" name="checkoutButton" />
                 </form>
             <?php endif; ?>
         </div>

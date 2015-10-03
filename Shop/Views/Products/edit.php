@@ -7,10 +7,10 @@ require 'Views/header.php';
             <div id="mcontent">
                 <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
                     isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
-                Edit: <?= $model['product']['name']; ?>
+                <b style="color: #fff;">Edit: <?= $model['product']['name']; ?></b>
                 <form method="post">
                     <p>Quantity:</p>
-                    <input type="text" name="quantity" value="<?= $model['product']['quantity']; ?>" />
+                    <input type="text" class="customInput" name="quantity" value="<?= $model['product']['quantity']; ?>" />
                     <p>Category:</p>
                     <select name="category">
                         <?php foreach($model['categories'] as $category): ?>
@@ -24,9 +24,10 @@ require 'Views/header.php';
                         <?php endforeach; ?>
                     </select>
                     <br />
+                    <br />
                     <input type="hidden" name="oldCategory" value="<?= $model['product']['CategoryId'];  ?>" />
                     <input type="hidden" name="productId" value="<?= $model['product']['ProductId'];  ?>" />
-                    <input type="submit" value="Edit Product" name="editProductButton"/>
+                    <input type="submit" class="customButton" value="Edit Product" name="editProductButton"/>
                 </form>
             </div>
         </div>

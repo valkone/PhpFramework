@@ -8,8 +8,9 @@ require 'Views/header.php';
             <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
                 isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
             <div class="label">Products</div>
+            <br />
             <?php foreach($model["products"] as $product): ?>
-                <a href="<?= __MAIN_URL__ . "Products/Show/" . $product["productId"]; ?>"><?= $product["productName"]; ?></a>
+                <a class="customLink" href="<?= __MAIN_URL__ . "Products/Show/" . $product["productId"]; ?>"><?= $product["productName"]; ?></a>
                 (quantity: <?= $product["productQuantity"] ?>) (price: <?= $product["productPrice"]; ?>)
                 (username: <?= $product["username"]; ?>)
                 <form method="post">
@@ -17,8 +18,8 @@ require 'Views/header.php';
                     <input type="hidden" name="price" value="<?= $product["productPrice"]; ?>" />
                     <input type="hidden" name="productId" value="<?= $product["productId"]; ?>" />
                     <input type="hidden" name="userId" value="<?= $product["userId"]; ?>" />
-                    <input type="submit" value="Reorder" name="reorderButton" />
-                </form>
+                    <input type="submit" class="customButton" value="Reorder" name="reorderButton" />
+                </form><br />
             <?php endforeach; ?>
         </div>
         <div class="clear"></div>

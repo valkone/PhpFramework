@@ -8,8 +8,8 @@ require 'Views/header.php';
                 <?php \Framework\Functions::requestMessages(isset(self::$viewBag["errors"]) ? self::$viewBag["errors"] : null,
                     isset(self::$viewBag["successMessage"]) ? self::$viewBag["successMessage"] : null); ?>
                 <form method="post">
-                    <input type="text" name="username" />
-                    <input type="submit" value="Ban" name="banButton" />
+                    <input type="text" class="customInput" name="username" />
+                    <input type="submit" value="Ban" class="customButton" name="banButton" />
                 </form>
             </div>
         </div>
