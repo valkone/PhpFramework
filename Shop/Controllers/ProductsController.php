@@ -171,4 +171,26 @@ class ProductsController {
 
         return new View($model);
     }
+
+    public function reorder() {
+        Functions::EditorAuthorization();
+
+        $productModel = new ProductsModel();
+        $model["products"] = $productModel->getAllUserProducts();
+
+        if(isset($_POST['reorderButton'])) {
+            $quantity = $_POST['quantity'];
+            $price = $_POST['price'];
+            $productId = $_POST['productId'];
+            $userId = $_POST['userId'];
+
+            $productModel->sellUserProducts($userId, $productId, $quantity, $price);
+        }
+
+        $categoriesModel = new CategoriesModel();
+        $categories = $categoriesModel->getAllCategories();
+        $model["categories"] = $categories;
+
+        return new View($model);
+    }
 }

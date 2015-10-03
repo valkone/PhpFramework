@@ -182,15 +182,66 @@ class ProductsModel {
                               p.id as productId
                             FROM product_user as pu
                             JOIN products as p
-                            ON p.id = pu.product_id';
+                            ON p.id = pu.product_id
+                            WHERE pu.user_id = "'.$id   .'"';
 
         $products =  $db->query($userProductsSql)->fetchAll();
 
         return $products;
     }
 
-    public function sellUserProducts($userId, $productId) {
-        // TODO: this method
+    public function getAllUserProducts() {
+        $db = DB::connect();
+
+        $userProductsSql = 'SELECT
+                              pu.quantity as productQuantity,
+                              p.name as productName,
+                              p.price as productPrice,
+                              p.id as productId,
+                              pu.user_id as userId,
+                              u.username as username
+                            FROM product_user as pu
+                            JOIN products as p
+                            ON p.id = pu.product_id
+                            JOIN users as u
+                            ON u.id = pu.user_id';
+
+        $products =  $db->query($userProductsSql)->fetchAll();
+
+        return $products;
+    }
+
+    public function sellUserProducts($userId, $productId, $quantity, $price) {
+        $db = DB::connect();
+
+        $checkProductUserSql = 'SELECT user_id FROM product_user WHERE product_id = "'.$productId.'"
+                                AND user_id = "'.$userId.'" AND quantity = "'.$quantity.'"';
+        $errors = [];
+        if($db->query($checkProductUserSql)->rowCount() == 0) {
+            $errors[] = "Invalid product or product quantity";
+        }
+
+        $checkProductPriceSql = 'SELECT price FROM products WHERE id = "'.$productId.'"';
+        if($db->query($checkProductPriceSql)->fetch()["price"] != $price) {
+            $errors[] = "Invalid price";
+        }
+
+        if(count($errors) == 0) {
+            $deleteProductUserSql = 'DELETE FROM product_user WHERE product_id = "'.$productId.'"
+                                    AND user_id = "'.$userId.'" AND quantity = "'.$quantity.'"';
+            $db->query($deleteProductUserSql);
+
+            $newCash = $quantity * $price;
+            $changeUserCashSql = 'UPDATE users SET cash = cash + '.$newCash.' WHERE id = "'.$userId.'"';
+            $db->query($changeUserCashSql);
+
+            $addProductQuantitySql = 'UPDATE products SET quantity = quantity + '.$quantity.' WHERE id = "'.$productId.'"';
+            $db->query($addProductQuantitySql);
+
+            View::$viewBag['successMessage'] = "Products was sold";
+        } else {
+            View::$viewBag['errors'] = $errors;
+        }
     }
 
     public function addReview($productId, $review, $userId)
@@ -225,7 +276,8 @@ class ProductsModel {
                                     u.username as user
                                  FROM reviews as r
                                  JOIN users as u
-                                 ON u.id = r.user_id';
+                                 ON u.id = r.user_id
+                                 WHERE r.product_id = "'.$productId.'"';
 
         $reviews = $db->query($getProductReviewsSql)->fetchAll();
 

@@ -11,11 +11,13 @@ require 'Views/header.php';
             <?php foreach($model["products"] as $product): ?>
                 <a href="<?= __MAIN_URL__ . "Products/Show/" . $product["productId"]; ?>"><?= $product["productName"]; ?></a>
                 (quantity: <?= $product["productQuantity"] ?>) (price: <?= $product["productPrice"]; ?>)
+                (username: <?= $product["username"]; ?>)
                 <form method="post">
                     <input type="hidden" name="quantity" value="<?= $product["productQuantity"] ?>" />
                     <input type="hidden" name="price" value="<?= $product["productPrice"]; ?>" />
                     <input type="hidden" name="productId" value="<?= $product["productId"]; ?>" />
-                    <input type="submit" value="Sell" name="sellButton" />
+                    <input type="hidden" name="userId" value="<?= $product["userId"]; ?>" />
+                    <input type="submit" value="Reorder" name="reorderButton" />
                 </form>
             <?php endforeach; ?>
         </div>

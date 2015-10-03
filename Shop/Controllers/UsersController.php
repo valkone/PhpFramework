@@ -10,6 +10,11 @@ use Framework\View;
 class UsersController {
 
     public function Login() {
+        if(isset($_SESSION['is_logged'])) {
+            header("Location: " . __MAIN_URL__ . __HOME_DIRECTORY__);
+            exit;
+        }
+
         if(isset($_POST['loginButton'])) {
             $username = $_POST['username'];
             $pass = $_POST['password'];
@@ -30,6 +35,11 @@ class UsersController {
     }
 
     public function Register() {
+        if(isset($_SESSION['is_logged'])) {
+            header("Location: " . __MAIN_URL__ . __HOME_DIRECTORY__);
+            exit;
+        }
+
         if(isset($_POST['registerButton'])) {
             $username = $_POST['username'];
             $pass= $_POST['pass'];
@@ -66,8 +76,22 @@ class UsersController {
     }
 
     public function Products() {
-        $usersModel = new ProductsModel();
-        $products = $usersModel->getUserProducts($_SESSION['id']);
+        if(!isset($_SESSION['is_logged'])) {
+            header("Location: " . __MAIN_URL__ . __HOME_DIRECTORY__);
+            exit;
+        }
+
+        $productModel = new ProductsModel();
+
+        if(isset($_POST['sellButton'])) {
+            $quantity = $_POST['quantity'];
+            $price = $_POST['price'];
+            $productId = $_POST['productId'];
+
+            $productModel->sellUserProducts($_SESSION['id'], $productId, $quantity, $price);
+        }
+
+        $products = $productModel->getUserProducts($_SESSION['id']);
         $model["products"] = $products;
 
         $categoriesModel = new CategoriesModel();
