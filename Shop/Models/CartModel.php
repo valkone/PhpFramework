@@ -3,6 +3,7 @@
 namespace Framework\Models;
 
 use Framework\DB;
+use Framework\View;
 
 class CartModel {
 
@@ -24,24 +25,33 @@ class CartModel {
         $userInfo = $db->query($userInfoSql)->fetch();
 
         if($productsPrice > $userInfo["cash"]) {
-            throw new \Exception("You don't have enough money");
-        }
+            View::$viewBag['errors'][] = "You don't have enough money";
+        } else {
+            $removeUserCashSql = 'UPDATE users SET cash = cash - "'.$productsPrice.'" WHERE id="'.$userInfo['id'].'"';
+            $db->query($removeUserCashSql);
 
-        $removeUserCashSql = 'UPDATE users SET cash = cash - "'.$productsPrice.'" WHERE id="'.$userInfo['id'].'"';
-        $db->query($removeUserCashSql);
+            foreach($products as $id => $product) {
+                $productExistsSql = 'SELECT product_id FROM product_user WHERE product_id = "'.$id.'"
+                                    AND user_id = "'.$userInfo['id'].'"';
 
-        foreach($products as $id => $product) {
-            $buyProductSql = 'INSERT INTO product_user(product_id, user_id, quantity)
+                if($db->query($productExistsSql)->rowCount() == 0) {
+                    $buyProductSql = 'INSERT INTO product_user(product_id, user_id, quantity)
                               VALUES("'.$id.'", "'.$userInfo['id'].'", "'.$product["quantity"].'")';
-            $db->query($buyProductSql);
+                } else {
+                    $buyProductSql = 'UPDATE product_user SET quantity = quantity + "'.$product["quantity"].'"
+                                      WHERE  product_id = "'.$id.'" AND user_id = "'.$userInfo['id'].'"';
+                }
 
-            $removeQuantitySql = 'UPDATE products SET quantity = quantity - "'.$product["quantity"].'" WHERE id="'.$id.'"';
-            $db->query($removeQuantitySql);
+                $db->query($buyProductSql);
 
-            unset($_SESSION['cart']['products'][$id]);
+                $removeQuantitySql = 'UPDATE products SET quantity = quantity - "'.$product["quantity"].'" WHERE id="'.$id.'"';
+                $db->query($removeQuantitySql);
+
+                unset($_SESSION['cart']['products'][$id]);
+            }
+
+            header("Location: " . __MAIN_URL__ . "Users/Products");
+            exit;
         }
-
-        header("Location: " . __MAIN_URL__ . "Users/Products");
-        exit;
     }
 }

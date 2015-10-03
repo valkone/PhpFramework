@@ -9,6 +9,10 @@ use Framework\View;
 class CartController {
 
     public function show() {
+        if(isset($_POST['checkoutButton'])) {
+            $cardModel = new CartModel();
+            $cardModel->checkout();
+        }
 
         $categoriesModel = new CategoriesModel();
         $categories = $categoriesModel->getAllCategories();
@@ -21,10 +25,5 @@ class CartController {
         unset($_SESSION['cart']['products'][$id]);
         header("Location: " . __MAIN_URL__ . "/Cart/Show");
         exit;
-    }
-
-    public function checkout() {
-        $cardModel = new CartModel();
-        $cardModel->checkout();
     }
 }

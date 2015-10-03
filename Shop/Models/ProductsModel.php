@@ -283,4 +283,74 @@ class ProductsModel {
 
         return $reviews;
     }
+
+    public function adminEditProduct($name, $desc, $condition, $quantity, $pic, $category, $productId, $oldCategory) {
+        $errors = [];
+        if($quantity <= 0) {
+            $errors[] = "Invalid quantity";
+        }
+        if($category == 0) {
+            $errors[] = "Invalid category";
+        }
+
+        if(count($errors) == 0) {
+            $db = DB::connect();
+
+            $editProduct = 'UPDATE products SET
+                              name = "'.$name.'",
+                              description = "'.$desc.'",
+                              `condition` = "'.$condition.'",
+                              quantity = "'.$quantity.'",
+                              picture = "'.$pic.'"
+                            WHERE id = "'.$productId.'"';
+            $db->query($editProduct);
+
+            $editCategory = 'UPDATE category_product SET category_id = "'.$category.'" WHERE
+                             category_id = "'.$oldCategory.'" AND product_id = "'.$productId.'"';
+            $db->query($editCategory);
+
+            View::$viewBag['successMessage'] = "Product edited";
+        } else {
+            View::$viewBag['errors'] = $errors;
+        }
+    }
+
+    public function getAllBoughtProducts() {
+        $db = DB::connect();
+
+        $getProductsSql = 'SELECT
+                              pu.quantity,
+                              u.username,
+                              u.id as userId,
+                              p.name,
+                              pu.product_id
+                           FROM product_user as pu
+                           JOIN users as u
+                           ON u.id = pu.user_id
+                           JOIN products as p
+                           ON p.id = pu.product_id';
+        $products = $db->query($getProductsSql)->fetchAll();
+
+        return $products;
+    }
+
+    public function editBoughtProduct($quantity, $productId, $userId) {
+        $errors = [];
+
+        if($quantity <= 0) {
+            $errors[] = "Invalid quantity";
+        }
+
+        if(count($errors) == 0) {
+            $db = DB::connect();
+
+            $editProductSql = 'UPDATE product_user SET quantity = "'.$quantity.'"
+                                WHERE product_id = "'.$productId.'" AND user_id = "'.$userId.'"';
+            $db->query($editProductSql);
+
+            View::$viewBag["successMessage"] = "Product Edited";
+        } else {
+            View::$viewBag['errors'] = $errors;
+        }
+    }
 }

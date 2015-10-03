@@ -28,6 +28,9 @@
                     <?php
                         if(isset($_SESSION['is_logged'])) {
                             ?>
+                            <li><tab><a href="<?= __MAIN_URL__ . "Users/Profile"; ?>">Profile</a></tab></li>
+                            <li><tab><a href="<?= __MAIN_URL__ . "Cart/Show"; ?>">Cart</a></tab></li>
+                            <li><tab><a href="<?= __MAIN_URL__ . "Users/Products"; ?>">Bought Products</a></tab></li>
                             <li><tab><a href="<?= __MAIN_URL__ . "Users/Logout"; ?>">Logout</a></tab></li>
                             <?php
                         } else {
@@ -42,6 +45,36 @@
             </div>
             <div class="clear"></div>
         </div>
+        <?php if(isset($_SESSION['admin'])): ?>
+            <div id="top-menu">
+                <div id="left-top-menu">
+                    Admin Panel:
+                </div>
+                <div id="right-top-menu">
+                    <ul>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Administrator/BanUser"; ?>">Ban User</a></tab></li>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Administrator/BanIp"; ?>">Ban IP</a></tab></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        <?php endif; ?>
+        <?php if(isset($_SESSION['admin']) || isset($_SESSION['editor'])): ?>
+            <div id="top-menu">
+                <div id="left-top-menu">
+                    Editor Panel:
+                </div>
+                <div id="right-top-menu">
+                    <ul>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Categories/Add"; ?>">Add Categories</a></tab></li>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Categories/Delete"; ?>">Delete Categories</a></tab></li>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Products/Add"; ?>">Add Products</a></tab></li>
+                        <li><tab><a href="<?= __MAIN_URL__ . "Products/Delete"; ?>">Delete Products</a></tab></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        <?php endif; ?>
         <div id="header-main">
             <div id="logo">
                 <a href="<?= __MAIN_URL__ . __HOME_DIRECTORY__ ?>"><img src="<?= __MAIN_URL__ ?>images/logo.jpg" /></a>
@@ -56,7 +89,7 @@
         </div>
         <div id="main-menu">
             <ul>
-                <li><a href="#">HOME</a></li>
+                <li><a href="<?= __MAIN_URL__ . __HOME_DIRECTORY__ ?>">HOME</a></li>
                 <li><a href="#">LEGAL NOTICE</a></li>
                 <li><a href="#">SECURE PAYMENT</a></li>
                 <li><a href="#">ABOUT US</a></li>

@@ -32,7 +32,7 @@ require 'Views/header.php';
                 <div class="clear"></div>
             </div>
             <div class="product-section">
-                <div class="label">BESTSELLERS</div>
+                <div class="label">Second Hand Products</div>
                 <?php foreach($model["secondHandProducts"] as $secondHandProduct): ?>
                     <div class="product">
                         <a href="<?= __MAIN_URL__ .  "Products/Show/" . $secondHandProduct["id"]; ?>">

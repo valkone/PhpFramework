@@ -114,4 +114,47 @@ class UsersModels {
             View::$viewBag['errors'] = $errors;
         }
     }
+
+    public function getAllUsers() {
+        $db = DB::connect();
+
+        $allUsersSql = 'SELECT id, username, email, role, cash FROM users';
+        $users = $db->query($allUsersSql)->fetchAll();
+
+        return $users;
+    }
+
+    public function editUser($username, $email, $role, $cash, $userId) {
+        $errors = [];
+        if(strlen($username) == 0) {
+            $errors[] = "Invalid username";
+        }
+        if(strlen($email) == 0 ){
+            $errors[] = "Invalid email";
+        }
+        if($cash < 0) {
+            $errors[] = "Invalid cash";
+        }
+
+        if(count($errors) == 0) {
+            $db = DB::connect();
+
+            $checkForEmailOrUsernameSql = 'SELECT * FROM users WHERE username = "'.$username.'" OR email = "'.$email.'"';
+            if($db->query($checkForEmailOrUsernameSql)->rowCount() > 0) {
+                View::$viewBag['errors'][] = "Username or email aready exists";
+            } else {
+                $editUserSql = 'UPDATE users SET
+                              username = "'.$username.'",
+                              email = "'.$email.'",
+                              role = "'.$role.'",
+                              cash = "'.$cash.'"
+                              WHERE id = "'.$userId.'"';
+                $db->query($editUserSql);
+
+                View::$viewBag['successMessage'] = "User edited";
+            }
+        } else {
+            View::$viewBag['errors'] = $errors;
+        }
+    }
 }

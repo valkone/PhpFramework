@@ -72,8 +72,11 @@ require 'Views/header.php';
                         <input type="submit" id="buy-button" name="addToCardButton" value="ADD TO CARD" />
                     <?php endif; ?>
                 </form>
-                    <?php if(isset($_SESSION['editor']) || isset($_SESSION['admin'])): ?>
+                    <?php if(isset($_SESSION['editor'])): ?>
                         <a href="<?= __MAIN_URL__ . "Products/Edit/" . $model['product']['ProductId']; ?>" id="buy-button">Edit</a>
+                    <?php endif; ?>
+                    <?php if(isset($_SESSION['admin'])): ?>
+                        <a href="<?= __MAIN_URL__ . "Administrator/Products/Edit/" . $model['product']['ProductId']; ?>" id="buy-button">Edit</a>
                     <?php endif; ?>
                     <?php if(isset($_SESSION['is_logged'])): ?>
                         <a href="javascript: void(0);" onclick="showReviewBox();" id="buy-button">Add Review</a>

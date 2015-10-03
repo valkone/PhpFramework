@@ -145,7 +145,7 @@ class ProductsController {
             $productId = (int)$_POST['productId'];
 
             $errors = [];
-            if($quantity == 0) {
+            if($quantity <= 0) {
                 $errors[] = "Invalid quantity";
             }
             if($category == 0) {
