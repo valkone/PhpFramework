@@ -4,7 +4,7 @@
     </div>
     <div id="footer-menu">
         <ul>
-            <li><a href="#">Home</a></li>
+            <li><a href="<?= __MAIN_URL__ . __HOME_DIRECTORY__; ?>">Home</a></li>
             <li><a href="#">Contact Us</a></li>
             <li><a href="#">About Us</a></li>
         </ul>

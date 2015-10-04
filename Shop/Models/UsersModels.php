@@ -139,20 +139,15 @@ class UsersModels {
         if(count($errors) == 0) {
             $db = DB::connect();
 
-            $checkForEmailOrUsernameSql = 'SELECT * FROM users WHERE username = "'.$username.'" OR email = "'.$email.'"';
-            if($db->query($checkForEmailOrUsernameSql)->rowCount() > 0) {
-                View::$viewBag['errors'][] = "Username or email aready exists";
-            } else {
-                $editUserSql = 'UPDATE users SET
+            $editUserSql = 'UPDATE users SET
                               username = "'.$username.'",
                               email = "'.$email.'",
                               role = "'.$role.'",
                               cash = "'.$cash.'"
                               WHERE id = "'.$userId.'"';
-                $db->query($editUserSql);
+            $db->query($editUserSql);
 
-                View::$viewBag['successMessage'] = "User edited";
-            }
+            View::$viewBag['successMessage'] = "User edited";
         } else {
             View::$viewBag['errors'] = $errors;
         }

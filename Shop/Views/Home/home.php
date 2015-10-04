@@ -41,7 +41,7 @@ require 'Views/header.php';
                                 if(strlen($secondHandProduct['picture']) == 0) {
                                     echo __DEFAULT_PICTURE__;
                                 } else {
-                                    echo $newProduct['picture'];
+                                    echo $secondHandProduct['picture'];
                                 }
                                 ?>" />
                             </div>
