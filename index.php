@@ -90,7 +90,7 @@ if(count($method->getParameters()) > 0 && is_object($method->getParameters()[0])
     }
 }
 
-$methodDoc = $method->getDocComment();
+$methodDoc = $refc->getMethod($action)->getDocComment();
 preg_match_all('/@[a-zA-Z]+/', $methodDoc, $matches);
 foreach($matches[0] as $match) {
     if(strtolower($match) == "@get") {
